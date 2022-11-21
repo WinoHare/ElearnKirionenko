@@ -172,7 +172,7 @@ class Salary:
         return math.floor(float(self.salary_to) * self.currency_to_rub[self.salary_currency])
 
 
-class InputConnect:
+class InputConnectEditedMain:
     def __init__(self):
         self.function_selection = input('Что необходимо сделать (Вакансии или Статистика): ')
         if self.function_selection == 'Вакансии':
@@ -517,4 +517,4 @@ class Report:
                          len(self.statistics.salary_by_city.keys()))
 
 
-InputConnect()
+InputConnectEditedMain()
