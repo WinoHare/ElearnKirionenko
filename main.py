@@ -171,7 +171,7 @@ class Salary:
     def get_salary_to_in_RUR(self):
         return math.floor(float(self.salary_to) * self.currency_to_rub[self.salary_currency])
 
-class InputConnectEditedMain:
+class InputConnectEditedDevelop2:
     def __init__(self):
         self.function_selection = input('Что необходимо сделать (Вакансии или Статистика): ')
         if self.function_selection == 'Вакансии':
