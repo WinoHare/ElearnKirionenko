@@ -171,12 +171,7 @@ class Salary:
     def get_salary_to_in_RUR(self):
         return math.floor(float(self.salary_to) * self.currency_to_rub[self.salary_currency])
 
-
-<<<<<<< HEAD
-class InputConnectEditedMain:
-=======
 class InputConnectEditedDevelop:
->>>>>>> develop
     def __init__(self):
         self.function_selection = input('Что необходимо сделать (Вакансии или Статистика): ')
         if self.function_selection == 'Вакансии':
@@ -519,10 +514,3 @@ class Report:
         graph_image = GraphsCreator(self.statistics, vacancie_name)
         pdf = PdfCreator(vacancie_name, workbook.workbook, len(self.statistics.salary_by_year.keys()),
                          len(self.statistics.salary_by_city.keys()))
-
-
-<<<<<<< HEAD
-InputConnectEditedMain()
-=======
-InputConnectEditedDevelop()
->>>>>>> develop
