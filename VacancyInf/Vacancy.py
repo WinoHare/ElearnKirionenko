@@ -1,6 +1,18 @@
+import datetime
 import math
-
+import time
+from datetime import datetime
 from VacancyInf.Salary import Salary
+
+
+def profiler(func):
+    def wrapper(*args, **kwargs):
+        before = time.time()
+        retval = func(*args, **kwargs)
+        after = time.time()
+        return after - before
+
+    return wrapper
 
 
 class Vacancy:
@@ -17,6 +29,7 @@ class Vacancy:
         area_name (str): Место работы
         published_at (str): Время публикации
     """
+
     def __init__(self, args: dict):
         """Инициализирует вакансию
 
@@ -41,6 +54,7 @@ class Vacancy:
                  }
     reversedTranslate = dict(zip(translate.values(), translate.keys()))
 
+    @profiler
     def get_published_at_year(self) -> int:
         """Возвращает год публикации
 
@@ -48,6 +62,14 @@ class Vacancy:
             int: Год публикации
         """
         return int(self.published_at[0:4])
+
+    # @profiler
+    # def get_published_at_year_second(self) -> int:
+    #     return datetime.strptime(self.published_at, '%Y-%m-%dT%H:%M:%S%z').year
+    #
+    # @profiler
+    # def get_published_at_year_third(self) -> int:
+    #     return time.strptime(self.published_at, '%Y-%m-%dT%H:%M:%S%z')
 
     def get_russian_format(self) -> list:
         """Возвращает список из полей вакансии в русском формате

@@ -6,6 +6,7 @@ from ReportModule.Report import Report
 titles = ['Название', 'Описание', 'Навыки', 'Опыт работы', 'Премиум-вакансия', 'Компания', 'Оклад', 'Название региона',
           'Дата публикации вакансии']
 
+
 class InputConnect:
     """Класс для обработки ввода и вызова дальнейших инструкций, в зависимости от ввода (точка входа)
 
@@ -27,6 +28,12 @@ class InputConnect:
             self.print_vacancies()
         elif self.function_selection == 'Статистика':
             self.get_report()
+        elif self.function_selection == 'Время':
+            data = DataSet(input('Название файла: '))
+            time = 0
+            for item in data.vacancies_objects:
+                time += item.get_published_at_year_second()
+            print(time)
         else:
             print('Неверный ввод данных')
 
@@ -152,4 +159,5 @@ class InputConnect:
             table.add_row([counter] + vacancie.get_russian_format())
         print(table.get_string(start=range_to_print[0],
                                end=range_to_print[1],
-                               fields=['№'] + titles_to_print if len(titles_to_print) != 0 else ['№'] + table.field_names))
+                               fields=['№'] + titles_to_print if len(titles_to_print) != 0 else [
+                                                                                                    '№'] + table.field_names))
