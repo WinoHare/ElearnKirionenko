@@ -68,18 +68,12 @@ class DataSet:
 
         :return: list or str: Возвращает список вакансий либо строку в случае ошибки
         """
-        is_header = True
-        vacancies = []
-        header = []
-        header_length = 0
         with open(self.file_name, encoding='utf-8') as csv_file:
             file = csv.reader(csv_file)
+            vacancies = []
+            header = next(file)
+            header_length = len(header)
             for row in file:
-                if is_header:
-                    is_header = False
-                    header = row
-                    header_length = len(header)
-                    continue
                 if self.is_correct_line(row, header_length):
                     vacancies.append(row)
         if len(header) == 0:
