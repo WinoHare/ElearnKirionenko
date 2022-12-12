@@ -1,7 +1,5 @@
-import datetime
 import math
 import time
-from datetime import datetime
 from VacancyInf.Salary import Salary
 
 
@@ -46,15 +44,18 @@ class Vacancy:
         self.area_name = args['area_name'] if 'area_name' in args.keys() else ''
         self.published_at = args['published_at'] if 'published_at' in args.keys() else ''
 
-    translate = {"noExperience": "Нет опыта", "between1And3": "От 1 года до 3 лет", "between3And6": "От 3 до 6 лет",
+    @property
+    def translate(self) -> dict:
+        return {"noExperience": "Нет опыта", "between1And3": "От 1 года до 3 лет", "between3And6": "От 3 до 6 лет",
                  "moreThan6": "Более 6 лет", "AZN": "Манаты", "BYR": "Белорусские рубли", "EUR": "Евро",
                  "GEL": "Грузинский лари", "KGS": "Киргизский сом", "KZT": "Тенге", "RUR": "Рубли", "UAH": "Гривны",
                  "USD": "Доллары", "UZS": "Узбекский сум", "TRUE": 'Без вычета налогов', "True": 'Без вычета налогов',
                  "FALSE": 'С вычетом налогов', "False": 'С вычетом налогов'
                  }
-    reversedTranslate = dict(zip(translate.values(), translate.keys()))
+    @property
+    def reversedTranslate(self):
+        return dict(zip(self.translate.values(), self.translate.keys()))
 
-    @profiler
     def get_published_at_year(self) -> int:
         """Возвращает год публикации
 

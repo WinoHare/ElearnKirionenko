@@ -1,5 +1,4 @@
 import csv
-import doctest
 import math
 import re
 from VacancyInf.Vacancy import Vacancy
@@ -17,7 +16,6 @@ class DataSet:
         file_name (str): Имя обрабатываемого файла
         vacancies_objects (list): Объекты вакансий
     """
-
     def __init__(self, file_name):
         """Инициализирует объект DataSet, парсит csv файл
 
@@ -29,39 +27,43 @@ class DataSet:
         self.file_name = file_name
         self.vacancies_objects = self.csv_reader()
 
-    filter_parameters = {
-        '': lambda vacancies, some_param: vacancies,
-        "Навыки": lambda vacancies, skills: filter(lambda v: all(s in v.key_skills for s in skills), vacancies),
-        "Оклад": lambda vacancies, salary:
-        filter(
-            lambda v: math.floor(v.salary.salary_from) <= math.floor(float(salary)) <= math.floor(v.salary.salary_to),
-            vacancies),
-        "Дата публикации вакансии": lambda vacancies, date:
-        filter(lambda v: f'{v.published_at[8:10]}.{v.published_at[5:7]}.{v.published_at[0:4]}' == date, vacancies),
-        "Опыт работы": lambda vacancies, experience:
-        filter(lambda v: v.experience_id == v.reversedTranslate[experience], vacancies),
-        "Премиум-вакансия": lambda vacancies, premium: filter(lambda v: v.premium == v.reverse_premium(premium),
-                                                              vacancies),
-        "Идентификатор валюты оклада": lambda vacancies, currency:
-        filter(lambda v: v.salary.salary_currency == v.reversedTranslate[currency], vacancies),
-        "Название": lambda vacancies, name: filter(lambda v: v.name == name, vacancies),
-        "Название региона": lambda vacancies, area: filter(lambda v: v.area_name == area, vacancies),
-        "Компания": lambda vacancies, employer_name: filter(lambda v: v.employer_name == employer_name, vacancies)
-    }
+    @property
+    def filter_parameters(self):
+        return {
+            '': lambda vacancies, some_param: vacancies,
+            "Навыки": lambda vacancies, skills: filter(lambda v: all(s in v.key_skills for s in skills), vacancies),
+            "Оклад": lambda vacancies, salary:
+            filter(
+                lambda v: math.floor(v.salary.salary_from) <= math.floor(float(salary)) <= math.floor(v.salary.salary_to),
+                vacancies),
+            "Дата публикации вакансии": lambda vacancies, date:
+            filter(lambda v: f'{v.published_at[8:10]}.{v.published_at[5:7]}.{v.published_at[0:4]}' == date, vacancies),
+            "Опыт работы": lambda vacancies, experience:
+            filter(lambda v: v.experience_id == v.reversedTranslate[experience], vacancies),
+            "Премиум-вакансия": lambda vacancies, premium: filter(lambda v: v.premium == v.reverse_premium(premium),
+                                                                  vacancies),
+            "Идентификатор валюты оклада": lambda vacancies, currency:
+            filter(lambda v: v.salary.salary_currency == v.reversedTranslate[currency], vacancies),
+            "Название": lambda vacancies, name: filter(lambda v: v.name == name, vacancies),
+            "Название региона": lambda vacancies, area: filter(lambda v: v.area_name == area, vacancies),
+            "Компания": lambda vacancies, employer_name: filter(lambda v: v.employer_name == employer_name, vacancies)
+        }
 
-    sort_parameters = {
-        'Название': lambda v: v.name,
-        'Описание': lambda v: v.description,
-        'Навыки': lambda v: len(v.key_skills),
-        'Опыт работы': lambda v: experience_rate[v.experience_id],
-        'Премиум-вакансия': lambda v: v.premium,
-        'Компания': lambda v: v.employer_name,
-        'Оклад': lambda v: v.salary.average_salary,
-        'Название региона': lambda v: v.area_name,
-        'Дата публикации вакансии': lambda v:
-        (f'{v.published_at[0:4]}.{v.published_at[5:7]}.{v.published_at[8:10]}',
-         f'{v.published_at[11:13]}.{v.published_at[14:16]}.{v.published_at[17:19]}')
-    }
+    @property
+    def sort_parameters(self):
+        return {
+            'Название': lambda v: v.name,
+            'Описание': lambda v: v.description,
+            'Навыки': lambda v: len(v.key_skills),
+            'Опыт работы': lambda v: experience_rate[v.experience_id],
+            'Премиум-вакансия': lambda v: v.premium,
+            'Компания': lambda v: v.employer_name,
+            'Оклад': lambda v: v.salary.average_salary,
+            'Название региона': lambda v: v.area_name,
+            'Дата публикации вакансии': lambda v:
+            (f'{v.published_at[0:4]}.{v.published_at[5:7]}.{v.published_at[8:10]}',
+             f'{v.published_at[11:13]}.{v.published_at[14:16]}.{v.published_at[17:19]}')
+        }
 
     def csv_reader(self) -> tuple or str:
         """Проходится по csv файлу и парсит данные
@@ -76,6 +78,7 @@ class DataSet:
             for row in file:
                 if self.is_correct_line(row, header_length):
                     vacancies.append(row)
+            csv_file.close()
         if len(header) == 0:
             self.is_empty = True
             self.error_massage = 'Пустой файл'
@@ -102,11 +105,6 @@ class DataSet:
             line (str): Строка для очистки
         Returns:
             str: Очищенная строка
-
-        >>> DataSet('StatsFiles/vacancies.csv').clean_line('   <b> string  </b>   <html>to     </html>    clean   ')
-        'string to clean'
-        >>> DataSet('StatsFiles/vacancies.csv').clean_line('    <b> string   </b><dsa><fsd><fsd>   <html>to      </html>    clean   ')
-        'string to clean'
         """
         line = re.sub('<[^<]+?>', '', line).replace('\xa0', ' ').replace(" ", ' ').strip()
         while '  ' in line:
@@ -143,5 +141,3 @@ class DataSet:
         self.vacancies_objects = self.vacancies_objects if sort_param == '' \
             else sorted(self.vacancies_objects, key=self.sort_parameters[sort_param], reverse=is_rev)
 
-if __name__ == 'main':
-    doctest.testmod()

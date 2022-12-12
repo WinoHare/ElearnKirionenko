@@ -1,4 +1,6 @@
 import math
+import os
+from multiprocessing import Process, Queue
 from DataSet import DataSet
 
 
@@ -6,7 +8,6 @@ class Statistics:
     """Класс для сбора статистики по вакансиям
 
     Attributes:
-        vacancies (list): Список вакансий
         vacancie_name (str): Название вакансии, для которой собирается статистика
         salary_by_year (dict): Статистика зарплат по годам
         count_by_year (dict): Статистика количества вакансий по годам
@@ -22,7 +23,6 @@ class Statistics:
         Args:
             file_name (str): Имя csv файла, откуда взять вакансии
         """
-        self.vacancies = DataSet(file_name).vacancies_objects
         self.vacancie_name = vacancie_name
         self.salary_by_year = {}
         self.count_by_year = {}
@@ -30,29 +30,80 @@ class Statistics:
         self.prof_count_by_year = {}
         self.salary_by_city = {}
         self.count_by_city = {}
+        self.vacancies_count = 0
 
-    def get_statistics(self) -> None:
-        """Собирает статистику по вакансиям и выводит ее в консоль"""
-        for vacancy in self.vacancies:
-            self.update_stats(vacancy.get_published_at_year(), vacancy.salary.average_salary, self.salary_by_year)
-            self.update_stats(vacancy.get_published_at_year(), 1, self.count_by_year)
-            self.update_stats(vacancy.area_name, vacancy.salary.average_salary, self.salary_by_city)
-            self.update_stats(vacancy.area_name, 1, self.count_by_city)
-            if self.vacancie_name in vacancy.name:
-                self.update_stats(vacancy.get_published_at_year(), vacancy.salary.average_salary,
-                                  self.prof_salary_by_year)
-                self.update_stats(vacancy.get_published_at_year(), 1, self.prof_count_by_year)
+        self.chunks_names = os.listdir('Chunks')
+        procs = []
+        stats_queue = Queue()
+        count_queue = Queue()
+        all_stats = []
 
-        self.get_average_salary(self.salary_by_year, self.count_by_year)
-        self.get_average_salary(self.prof_salary_by_year, self.prof_count_by_year)
+        for chunk in self.chunks_names:
+            p = Process(target=self.get_statistics_in_thread,  args=(chunk, stats_queue, count_queue))
+            procs.append(p)
+            p.start()
+
+        for p in procs:
+            print(p.name)
+            p.join(0.75)
+
+        while not stats_queue.empty():
+            all_stats.append(stats_queue.get())
+
+        vacancies_count = 0
+        while not count_queue.empty():
+            vacancies_count += count_queue.get()
+        print('ok')
+        self.union_stats(all_stats)
         self.get_average_salary(self.salary_by_city, self.count_by_city)
-        self.get_percentage_of_total(self.count_by_city, len(self.vacancies))
-
+        self.get_percentage_of_total(self.count_by_city, vacancies_count)
         self.get_cities_with_enough_count()
         self.sort_statistics()
         self.print_stats()
+        print(self.salary_by_year)
 
-    def update_stats(self, key: str, value: int or float, stats: dict) -> None:
+    def get_statistics_in_thread(self, file_name: str, stats_queue: Queue, count_queue: Queue) -> None:
+        """Собирает статистику по вакансиям и выводит ее в консоль"""
+        vacancies = DataSet(f'Chunks/{file_name}').vacancies_objects
+        count = len(vacancies)
+        year = int(file_name[:4])
+        stats = {'salary_by_year': {}, 'count_by_year': {}, 'prof_salary_by_year': {}, 'prof_count_by_year': {},
+                 'salary_by_city': {}, 'count_by_city': {}}
+
+        for vacancy in vacancies:
+            self.update_stats(year, vacancy.salary.average_salary, stats['salary_by_year'])
+            self.update_stats(year, 1, stats['count_by_year'])
+            if self.vacancie_name in vacancy.name:
+                self.update_stats(year, vacancy.salary.average_salary,
+                                  stats['prof_salary_by_year'])
+                self.update_stats(year, 1, stats['prof_count_by_year'])
+            self.update_stats(vacancy.area_name, vacancy.salary.average_salary, stats['salary_by_city'])
+            self.update_stats(vacancy.area_name, 1, stats['count_by_city'])
+        self.get_average_salary(stats['salary_by_year'], stats['count_by_year'])
+        self.get_average_salary(stats['prof_salary_by_year'], stats['prof_count_by_year'])
+        print(year)
+        stats_queue.put(stats)
+        count_queue.put(count)
+
+
+    def union_stats(self, stats: list):
+        for stat in stats:
+            for name, child_dict in stat.items():
+                for key, value in child_dict.items():
+                    if name == 'salary_by_year':
+                        self.salary_by_year[key] = value
+                    if name == 'count_by_year':
+                        self.count_by_year[key] = value
+                    if name == 'prof_salary_by_year':
+                        self.prof_salary_by_year[key] = value
+                    if name == 'prof_count_by_year':
+                        self.prof_count_by_year[key] = value
+                    if name == 'salary_by_city':
+                        self.update_stats(key, value, self.salary_by_city)
+                    if name == 'count_by_city':
+                        self.update_stats(key, value, self.count_by_city)
+
+    def update_stats(self, key: int or str, value: int or float, stats: dict) -> None:
         """Обновляет статистику для новой вакансии
 
         Args:
@@ -119,3 +170,4 @@ class Statistics:
         print('Динамика количества вакансий по годам для выбранной профессии:', self.prof_count_by_year)
         print('Уровень зарплат по городам (в порядке убывания):', self.salary_by_city)
         print('Доля вакансий по городам (в порядке убывания):', self.count_by_city)
+

@@ -18,7 +18,7 @@ class InputConnect:
 
     def __init__(self):
         """Запрашивает данные из консоли, и, в зависимости от ввода, выбирает дальнейшие инструкции"""
-        self.function_selection = input('Что необходимо сделать (Вакансии или Статистика): ')
+        self.function_selection = 'Статистика'
         if self.function_selection == 'Вакансии':
             self.error_message = ''
             self.is_input_correct = True
@@ -51,8 +51,8 @@ class InputConnect:
 
     def get_report(self) -> None:
         """Собирает параметры отчета и вызывает формирование отчета"""
-        file_name = input('Введите название файла: ')
-        vacancy_name = input('Введите название профессии: ')
+        file_name = ''
+        vacancy_name = 'Аналитик'
         Report(file_name, vacancy_name)
 
     def get_filter_parameter(self) -> tuple:
