@@ -25,4 +25,4 @@ class Chunks:
             writer.writerows(filter(lambda row: row[-1][:4] == year, data))
 
 
-Chunks('StatsFiles/vacancies_by_year.csv')
+Chunks('Data/vacancies_dif_currencies.csv')
