@@ -21,13 +21,13 @@ class InputConnect:
         """
         Запрашивает данные из консоли, и, в зависимости от ввода, выбирает дальнейшие инструкции
         """
-        self.get_report()
+        vacancie_name = input('Введите название вакансии: ')
+        self.get_report(vacancie_name)
 
     @profiler
-    def get_report(self) -> None:
+    def get_report(self, vacancie_name: str) -> None:
         """
         Собирает параметры отчета и вызывает формирование отчета
         """
-        vacancy_name = input('Введите название вакансии: ')
-        Report(vacancy_name)
+        Report(vacancie_name)
 
