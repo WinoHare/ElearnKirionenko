@@ -1,6 +1,6 @@
 import unittest
 from DataSet import DataSet
-from VacancyInf.Vacancy import Vacancy
+from VacancyInf.Vacancie import Vacancie
 
 
 class FormatterTests(unittest.TestCase):
@@ -10,7 +10,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -22,7 +22,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -35,7 +35,7 @@ class FormatterTests(unittest.TestCase):
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
         output_value = [
-            Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+            Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                      'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                      'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                      'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -47,7 +47,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -59,7 +59,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -71,7 +71,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -83,7 +83,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -95,7 +95,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -107,7 +107,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -119,7 +119,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
@@ -131,7 +131,7 @@ class FormatterTests(unittest.TestCase):
                   'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
         input_value = [['Программист', 'JS developer', 'HTML, CSS, JS', 'between1And3', 'True', 'Google', '50000',
                         '75000', 'True', 'RUR', 'Москва', '2022-07-05T18:19:30+0300']]
-        output_value = [Vacancy({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
+        output_value = [Vacancie({'name': 'Программист', 'description': 'JS developer', 'key_skills': 'HTML, CSS, JS',
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]

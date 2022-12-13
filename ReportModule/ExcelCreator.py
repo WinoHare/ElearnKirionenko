@@ -4,14 +4,16 @@ from Statistics import Statistics
 
 
 class ExcelCreator:
-    """Класс для создания Excel таблицы со статистикой
+    """
+    Класс для создания Excel таблицы со статистикой
 
     Attributes:
         workbook (Workbook): Excel таблица
     """
 
     def __init__(self, stats: Statistics):
-        """Инициализирует класс, создавая таблицу
+        """
+        Инициализирует класс, создавая таблицу
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -19,7 +21,8 @@ class ExcelCreator:
         self.workbook = self.initialize_workbook(stats)
 
     def initialize_workbook(self, stats: Statistics) -> Workbook:
-        """Инициализирует таблицу и добавляет в нее данные
+        """
+        Инициализирует таблицу и добавляет в нее данные
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -33,7 +36,8 @@ class ExcelCreator:
         return workbook
 
     def create_workbook(self, vacancie_name: str) -> tuple:
-        """Создает excel таблицу, добавляет в нее 2 листа, задает заголовки
+        """
+        Создает excel таблицу, добавляет в нее 2 листа, задает заголовки
 
         Args:
             vacancie_name (str): Название профессии, по которой собрана статистика
@@ -55,7 +59,8 @@ class ExcelCreator:
 
     def add_stats_to_excel(self, stats: Statistics, years_sheet: Workbook.worksheets,
                            cities_sheet: Workbook.worksheets):
-        """Добавляет статистику в таблицу excel
+        """
+        Добавляет статистику в таблицу excel
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -65,9 +70,9 @@ class ExcelCreator:
         for year in stats.salary_by_year.keys():
             years_sheet.append([year,
                                 stats.salary_by_year[year],
-                                stats.prof_salary_by_year[year],
+                                stats.prof_salary_by_year[year] if year in stats.prof_salary_by_year.keys() else 0,
                                 stats.count_by_year[year],
-                                stats.prof_salary_by_year[year]])
+                                stats.prof_count_by_year[year] if year in stats.prof_count_by_year.keys() else 0])
 
         for city in stats.salary_by_city.keys():
             cities_sheet.append([city, stats.salary_by_city[city]])
@@ -78,7 +83,8 @@ class ExcelCreator:
 
     def set_sheets_settings(self, stats: Statistics, years_sheet: Workbook.worksheets,
                             cities_sheet: Workbook.worksheets) -> None:
-        """Устанавливает настройки для таблицы
+        """
+        Устанавливает настройки для таблицы
 
         Args:
             stats (Statistics): Статистика по вакансиям

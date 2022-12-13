@@ -5,7 +5,8 @@ from DataSet import DataSet
 
 
 class Statistics:
-    """Класс для сбора статистики по вакансиям
+    """
+    Класс для сбора статистики по вакансиям
 
     Attributes:
         vacancie_name (str): Название вакансии, для которой собирается статистика
@@ -17,11 +18,9 @@ class Statistics:
         count_by_city (dict): Статистика количества вакансий по городам
     """
 
-    def __init__(self, file_name: str, vacancie_name: str):
-        """Инициализирует класс, получает данные по вакансиям
-
-        Args:
-            file_name (str): Имя csv файла, откуда взять вакансии
+    def __init__(self, vacancie_name: str):
+        """
+        Инициализирует класс, получает данные по вакансиям
         """
         self.vacancie_name = vacancie_name
         self.salary_by_year = {}
@@ -32,35 +31,44 @@ class Statistics:
         self.count_by_city = {}
         self.vacancies_count = 0
 
-        self.chunks_names = os.listdir('Chunks')
+    def get_statistics(self):
+        """
+        Собирает все статистику
+        """
+        all_stats = self.start_multiprocessing()
+        self.union_stats(all_stats)
+        self.get_average_salary(self.salary_by_city, self.count_by_city)
+        self.get_percentage_of_total(self.count_by_city, self.vacancies_count)
+        self.get_cities_with_enough_count()
+        self.sort_statistics()
+        self.print_stats()
+
+    def start_multiprocessing(self) -> list:
+        """
+        Запускает потоки для сбора статистики
+
+        Returns:
+             list: список статистик для каждого года
+        """
+        chunks_names = os.listdir('Chunks')
         procs = []
         stats_queue = Queue()
         count_queue = Queue()
         all_stats = []
 
-        for chunk in self.chunks_names:
-            p = Process(target=self.get_statistics_in_thread,  args=(chunk, stats_queue, count_queue))
+        for chunk in chunks_names:
+            p = Process(target=self.get_statistics_in_thread, args=(chunk, stats_queue, count_queue))
             procs.append(p)
             p.start()
 
         for p in procs:
-            print(p.name)
             p.join(0.75)
 
         while not stats_queue.empty():
             all_stats.append(stats_queue.get())
-
-        vacancies_count = 0
         while not count_queue.empty():
-            vacancies_count += count_queue.get()
-        print('ok')
-        self.union_stats(all_stats)
-        self.get_average_salary(self.salary_by_city, self.count_by_city)
-        self.get_percentage_of_total(self.count_by_city, vacancies_count)
-        self.get_cities_with_enough_count()
-        self.sort_statistics()
-        self.print_stats()
-        print(self.salary_by_year)
+            self.vacancies_count += count_queue.get()
+        return all_stats
 
     def get_statistics_in_thread(self, file_name: str, stats_queue: Queue, count_queue: Queue) -> None:
         """Собирает статистику по вакансиям и выводит ее в консоль"""
@@ -81,7 +89,6 @@ class Statistics:
             self.update_stats(vacancy.area_name, 1, stats['count_by_city'])
         self.get_average_salary(stats['salary_by_year'], stats['count_by_year'])
         self.get_average_salary(stats['prof_salary_by_year'], stats['prof_count_by_year'])
-        print(year)
         stats_queue.put(stats)
         count_queue.put(count)
 
@@ -107,7 +114,7 @@ class Statistics:
         """Обновляет статистику для новой вакансии
 
         Args:
-            key (str): Ключ, для которого необходимо обновить статистику
+            key (str or int): Ключ, для которого необходимо обновить статистику
             value (int or float): На сколько необходимо увеличить статистику
             stats (dict): Для какой статистики необходимо обновить данные
         """
@@ -149,9 +156,13 @@ class Statistics:
         self.count_by_city = new_count_by_city
 
     def sort_statistics(self) -> None:
-        """Сортирует статистику"""
-        self.prof_salary_by_year = self.prof_salary_by_year if len(self.prof_salary_by_year) != 0 else {2022: 0}
-        self.prof_count_by_year = self.prof_count_by_year if len(self.prof_count_by_year) != 0 else {2022: 0}
+        """
+        Сортирует статистику
+        """
+        self.salary_by_year = dict(sorted(self.salary_by_year.items(), key=lambda x: x[0]))
+        self.count_by_year = dict(sorted(self.count_by_year.items(), key=lambda x: x[0]))
+        self.prof_salary_by_year = dict(sorted(self.prof_salary_by_year.items(), key=lambda x: x[0]))
+        self.prof_count_by_year = dict(sorted(self.prof_count_by_year.items(), key=lambda x: x[0]))
         self.salary_by_city = dict(sorted(self.salary_by_city.items(), key=lambda x: x[1], reverse=True)[:10])
         self.count_by_city = dict(sorted(self.count_by_city.items(), key=lambda x: x[1], reverse=True)[:10])
 

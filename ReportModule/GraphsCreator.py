@@ -4,10 +4,13 @@ from Statistics import Statistics
 
 
 class GraphsCreator:
-    """Класс для создания диаграмм по статистике"""
+    """
+    Класс для создания диаграмм по статистике
+    """
 
     def __init__(self, stats):
-        """Генерирует изображение c диаграммами
+        """
+        Генерирует изображение c диаграммами
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -15,7 +18,8 @@ class GraphsCreator:
         self.generate_image(stats)
 
     def generate_image(self, stats: Statistics) -> None:
-        """Генерирует 4 диаграммы и сохраняет их в изображение
+        """
+        Генерирует 4 диаграммы и сохраняет их в изображение
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -32,7 +36,8 @@ class GraphsCreator:
         plt.savefig('ReportModule/Results/graph.png')
 
     def create_salary_by_year_plot(self, stats: Statistics) -> None:
-        """Генерирует столбчатую диаграмму по уровню зарплат по годам
+        """
+        Генерирует столбчатую диаграмму по уровню зарплат по годам
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -50,7 +55,8 @@ class GraphsCreator:
         plt.title('Уровень зарплат по годам', fontsize=12)
 
     def create_count_by_year_plot(self, stats: Statistics) -> None:
-        """Генерирует столбчатую диаграмму по количеству вакансий по годам
+        """
+        Генерирует столбчатую диаграмму по количеству вакансий по годам
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -68,7 +74,8 @@ class GraphsCreator:
         plt.title('Количество вакансий по годам', fontsize=12)
 
     def create_salary_by_city_plot(self, stats: Statistics) -> None:
-        """Генерирует горизонтальную столбчатую диаграмму по уровню зарплат по городам
+        """
+        Генерирует горизонтальную столбчатую диаграмму по уровню зарплат по городам
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -81,7 +88,8 @@ class GraphsCreator:
         plt.title('Уровень зарплат по городам', fontsize=12)
 
     def create_count_by_city_plot(self, stats: Statistics) -> None:
-        """Генерирует круговую диаграмму по количеству вакансий по городам
+        """
+        Генерирует круговую диаграмму по количеству вакансий по городам
 
         Args:
             stats (Statistics): Статистика по вакансиям

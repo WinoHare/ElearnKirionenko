@@ -5,20 +5,22 @@ from Statistics import Statistics
 
 
 class Report:
-    """Класс для создания отчета: excel таблицы, изображения с диаграммами и общего отчета в pdf
+    """
+    Класс для создания отчета: excel таблицы, изображения с диаграммами и общего отчета в pdf
 
     Attributes:
         statistics (Statistics): Статистика по вакансиям
     """
 
-    def __init__(self, file_name: str, vacancie_name: str):
-        """Собирает статистику и создает отчет
+    def __init__(self, vacancie_name: str):
+        """
+        Собирает статистику и создает отчет
 
         Args:
-            file_name (str): Имя файла с данными
             vacancie_name (str): Название вакансии, по которой собирается статистика
         """
-        self.statistics = Statistics(file_name, vacancie_name)
+        self.statistics = Statistics(vacancie_name)
+        self.statistics.get_statistics()
 
         GraphsCreator(self.statistics)
         PdfCreator(vacancie_name, ExcelCreator(self.statistics).workbook, len(self.statistics.salary_by_year.keys()),

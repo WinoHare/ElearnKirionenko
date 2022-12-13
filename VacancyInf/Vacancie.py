@@ -13,8 +13,9 @@ def profiler(func):
     return wrapper
 
 
-class Vacancy:
-    """Класс для представления вакансий
+class Vacancie:
+    """
+    Класс для представления вакансий
 
     Attributes:
         name (str): Имя вакансии
@@ -29,7 +30,8 @@ class Vacancy:
     """
 
     def __init__(self, args: dict):
-        """Инициализирует вакансию
+        """
+        Инициализирует вакансию
 
         Args:
             args (dict): Словарь для всех полей вакансии
@@ -57,23 +59,17 @@ class Vacancy:
         return dict(zip(self.translate.values(), self.translate.keys()))
 
     def get_published_at_year(self) -> int:
-        """Возвращает год публикации
+        """
+        Возвращает год публикации
 
         Returns:
             int: Год публикации
         """
         return int(self.published_at[0:4])
 
-    # @profiler
-    # def get_published_at_year_second(self) -> int:
-    #     return datetime.strptime(self.published_at, '%Y-%m-%dT%H:%M:%S%z').year
-    #
-    # @profiler
-    # def get_published_at_year_third(self) -> int:
-    #     return time.strptime(self.published_at, '%Y-%m-%dT%H:%M:%S%z')
-
     def get_russian_format(self) -> list:
-        """Возвращает список из полей вакансии в русском формате
+        """
+        Возвращает список из полей вакансии в русском формате
 
         Returns:
             list: Список форматированных полей
@@ -85,7 +81,8 @@ class Vacancy:
                 self.area_name, f'{self.published_at[8:10]}.{self.published_at[5:7]}.{self.published_at[0:4]}']
 
     def premium_yes_no(self) -> str:
-        """Возвращает Да/Нет в зависимости от булева значения premium
+        """
+        Возвращает Да/Нет в зависимости от булева значения premium
 
         Returns:
             str: Да/Нет
@@ -93,7 +90,8 @@ class Vacancy:
         return 'Да' if self.premium == 'True' else 'Нет'
 
     def cut_line(self, line: str) -> str:
-        """Обрезает линию до 100 символов и добавляет в конце многоточие
+        """
+        Обрезает линию до 100 символов и добавляет в конце многоточие
 
         Args:
             line (str): Линия для обрезки
@@ -103,7 +101,8 @@ class Vacancy:
         return line[0:100] + '...' if len(line) > 100 else line
 
     def format_number(self, number: float) -> str:
-        """Задает формат числу вида "ddd ddd"
+        """
+        Задает формат числу вида "ddd ddd"
 
         Args:
             number (int): Число для форматирования
@@ -113,7 +112,8 @@ class Vacancy:
         return '{:3,d}'.format(math.floor(float(number))).replace(',', ' ')
 
     def reverse_premium(self, premium: str) -> str:
-        """Возвращает булево значение в зависимости от вхождения Да/Нет
+        """
+        Возвращает булево значение в зависимости от вхождения Да/Нет
 
         Args:
             premium (str): Да/Нет

@@ -1,9 +1,9 @@
 import math
-import doctest
 
 
 class Salary:
-    """Класс для представления зарплаты
+    """
+    Класс для представления зарплаты
 
     Attributes:
         salary_from (float): Нижняя граница оклада
@@ -14,25 +14,11 @@ class Salary:
     """
 
     def __init__(self, args: dict):
-        """Инициальзирует класс, выполняет конвертацию
+        """
+        Инициализирует класс, выполняет конвертацию
 
         Args:
             args (dict): Словарь с ключами для каждого поля класса
-
-        >>> type(Salary({'salary_from': 1, 'salary_to': 1, 'salary_currency': 'RUR', 'salary_gross': 'True'})).__name__
-        'Salary'
-        >>> Salary({'salary_from': 1, 'salary_to': 1, 'salary_currency': 'RUR', 'salary_gross': 'True'}).salary_from
-        1.0
-        >>> Salary({'salary_from': 1, 'salary_to': 1, 'salary_currency': 'RUR', 'salary_gross': 'True'}).salary_to
-        1.0
-        >>> Salary({'salary_from': 1, 'salary_to': 1, 'salary_currency': 'RUR', 'salary_gross': 'True'}).salary_currency
-        'RUR'
-        >>> Salary({'salary_from': 1, 'salary_to': 1, 'salary_currency': 'RUR', 'salary_gross': 'True'}).salary_gross
-        'True'
-        >>> Salary({'salary_from': 10, 'salary_to': 150, 'salary_currency': 'RUR', 'salary_gross': 'True'}).average_salary
-        80
-        >>> Salary({'salary_from': 1099, 'salary_to': 2099, 'salary_currency': 'EUR', 'salary_gross': 'True'}).average_salary
-        95780
         """
         self.salary_from = float(args['salary_from']) if 'salary_from' in args.keys() else 0.0
         self.salary_to = float(args['salary_to']) if 'salary_to' in args.keys() else 0.0
@@ -53,7 +39,3 @@ class Salary:
         "USD": 60.66,
         "UZS": 0.0055,
     }
-
-
-if __name__ == 'main':
-    doctest.testmod()
