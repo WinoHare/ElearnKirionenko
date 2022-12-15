@@ -7,13 +7,28 @@ import pandas as pd
 
 
 class Currencies:
+    """
+    Получает информацию о валютах по файлу, считывает ее в DataFrame
+    """
     @staticmethod
-    def get_currencies_in_dataframe():
+    def get_currencies_in_dataframe() -> pd.DataFrame:
+        """
+        Считывает данные о валютах из csv файла и возвращает DataFrame
+
+        Returns:
+            DataFrame: Таблица с курсами вакансий
+        """
         csv_file = pd.read_csv('Data/currencies.csv', index_col='date')
         return pd.DataFrame(csv_file)
 
     @staticmethod
-    def save_currencies_in_csv(file_name: str):
+    def save_currencies_in_csv(file_name: str) -> None:
+        """
+        Получает с сайта ЦБ данные по курсам за каждый месяц
+
+        Args:
+            file_name (str): Файл, для которого необходимо получить данные по валютам
+        """
         min_date, max_date = Currencies.__get_min_max_dates(file_name)
         dates = []
         currencies = Currencies.__get_currencies_with_enough_count(file_name)
@@ -34,7 +49,15 @@ class Currencies:
         df.to_csv('Data/currencies')
 
     @staticmethod
-    def __get_min_max_dates(file_name: str):
+    def __get_min_max_dates(file_name: str) -> tuple[datetime, datetime]:
+        """
+        Получает самую раннюю и позднюю даты по csv файлу
+
+        Args:
+            file_name (str): Имя файла, по которому идет поиск
+        Returns:
+             tuple[datetime, datetime]: Самая ранняя и поздняя даты
+        """
         min_date = datetime.datetime.strptime('3000-01-01T00:00:00+0000', '%Y-%m-%dT%H:%M:%S%z')
         max_date = datetime.datetime.strptime('1000-01-01T00:00:00+0000', '%Y-%m-%dT%H:%M:%S%z')
         with open(file_name, encoding='utf-8') as csv_file:
@@ -50,7 +73,15 @@ class Currencies:
         return min_date, max_date
 
     @staticmethod
-    def __get_currencies_with_enough_count(file_name: str):
+    def __get_currencies_with_enough_count(file_name: str) -> dict[str, list]:
+        """
+        Считает частотность появления валют и отбирает валюты с частотностью > 5000
+
+        Args:
+            file_name (str): Имя файла, по которому собираются данные
+        Return:
+            dict[str, list]: Словарь с ключом-валютой и значением-листом для последующей обработки
+        """
         currencies = {}
         with open(file_name, encoding='utf-8') as csv_file:
             file = csv.reader(csv_file)

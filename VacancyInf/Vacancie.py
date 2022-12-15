@@ -4,16 +4,6 @@ from pandas import DataFrame
 from VacancyInf.Salary import Salary
 
 
-def profiler(func):
-    def wrapper(*args, **kwargs):
-        before = time.time()
-        retval = func(*args, **kwargs)
-        after = time.time()
-        return after - before
-
-    return wrapper
-
-
 class Vacancie:
     """
     Класс для представления вакансий
@@ -49,6 +39,9 @@ class Vacancie:
 
     @property
     def translate(self) -> dict:
+        """
+        Словарь с переводом на русский
+        """
         return {"noExperience": "Нет опыта", "between1And3": "От 1 года до 3 лет", "between3And6": "От 3 до 6 лет",
                 "moreThan6": "Более 6 лет", "AZN": "Манаты", "BYR": "Белорусские рубли", "EUR": "Евро",
                 "GEL": "Грузинский лари", "KGS": "Киргизский сом", "KZT": "Тенге", "RUR": "Рубли", "UAH": "Гривны",
@@ -58,9 +51,21 @@ class Vacancie:
 
     @property
     def reversedTranslate(self):
+        """
+        Словарь с переводом на английский
+        """
         return dict(zip(self.translate.values(), self.translate.keys()))
 
-    def get_salary(self, args: dict, currencies: DataFrame):
+    def get_salary(self, args: dict, currencies: DataFrame) -> float:
+        """
+        Определяет зарплату в зависимости от полей salary_to и salary_from и конвертирует в рубли
+
+        Args:
+            args (dict): Словарь для всех полей вакансии
+            currencies (DataFrame): Таблица с курсами валют по месяцам
+        Returns:
+            float: Зарплата
+        """
         if args['salary_from'] == '':
             salary = float(args['salary_to'])
         elif args['salary_to'] == '':
@@ -81,7 +86,13 @@ class Vacancie:
         """
         return int(self.published_at[0:4])
 
-    def get_published_at_month_year(self):
+    def get_published_at_month_year(self) -> str:
+        """
+        Возвращает год публикации
+
+        Returns:
+            str: Месяц и год публикации
+        """
         return f'{self.published_at[5:7]}/{self.get_published_at_year()}'
 
     def get_russian_format(self) -> list:

@@ -16,6 +16,7 @@ class Statistics:
         prof_count_by_year (dict):Статистика количества вакансий по годам для заданной профессии
         salary_by_city (dict): Статистика зарплат по городам
         count_by_city (dict): Статистика количества вакансий по городам
+        vacancies_count (int): Общее количество вакансий, вошедших в выборку
     """
 
     def __init__(self, vacancie_name: str):
@@ -31,7 +32,7 @@ class Statistics:
         self.count_by_city = {}
         self.vacancies_count = 0
 
-    def get_statistics(self):
+    def get_statistics(self) -> None:
         """
         Собирает все статистику
         """
@@ -48,7 +49,7 @@ class Statistics:
         Запускает потоки для сбора статистики
 
         Returns:
-             list: список статистик для каждого года
+             list: Список статистик для каждого года
         """
         chunks_names = os.listdir('Chunks')
         procs = []
@@ -71,7 +72,14 @@ class Statistics:
         return all_stats
 
     def get_statistics_in_thread(self, file_name: str, stats_queue: Queue, count_queue: Queue) -> None:
-        """Собирает статистику по вакансиям и выводит ее в консоль"""
+        """
+        Собирает статистику по вакансиям в потоке
+
+        Args:
+            file_name (str): Имя обрабатываемого файла
+            stats_queue (Queue):Многопоточная очередь, содержащая статистику для текущего файла
+            count_queue (Queue): Многопоточная очередь, содержащая количество вакансий для текущего файла
+        """
         vacancies = DataSet(f'Chunks/{file_name}').vacancies_objects
         count = len(vacancies)
         year = int(file_name[:4])
@@ -93,7 +101,13 @@ class Statistics:
         count_queue.put(count)
 
 
-    def union_stats(self, stats: list):
+    def union_stats(self, stats: list) -> None:
+        """
+        Объединяет список статистик в одну
+
+        Args:
+            stats (list): Список статистик
+        """
         for stat in stats:
             for name, child_dict in stat.items():
                 for key, value in child_dict.items():
