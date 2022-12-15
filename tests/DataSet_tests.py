@@ -14,7 +14,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].name,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].name,
                          output_value[0].name)
 
     def test_formatter_description(self):
@@ -26,7 +26,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].description,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].description,
                          output_value[0].description)
 
     def test_formatter_experience_id(self):
@@ -39,7 +39,7 @@ class FormatterTests(unittest.TestCase):
                      'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                      'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                      'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].experience_id,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].experience_id,
                          output_value[0].experience_id)
 
     def test_formatter_premium(self):
@@ -51,7 +51,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].premium,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].premium,
                          output_value[0].premium)
 
     def test_formatter_salary_from(self):
@@ -63,7 +63,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].salary.salary_from,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].salary.salary_from,
                          output_value[0].salary.salary_from)
 
     def test_formatter_salary_to(self):
@@ -75,7 +75,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].salary.salary_to,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].salary.salary_to,
                          output_value[0].salary.salary_to)
 
     def test_formatter_salary_gross(self):
@@ -87,7 +87,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].salary.salary_gross,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].salary.salary_gross,
                          output_value[0].salary.salary_gross)
 
     def test_formatter_salary_currency(self):
@@ -99,7 +99,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].salary.salary_currency,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].salary.salary_currency,
                          output_value[0].salary.salary_currency)
 
     def test_formatter_average_salary(self):
@@ -111,7 +111,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].salary.average_salary,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].salary.average_salary,
                          output_value[0].salary.average_salary)
 
     def test_formatter_area_name(self):
@@ -123,7 +123,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].area_name,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].area_name,
                          output_value[0].area_name)
 
     def test_formatter_published_at(self):
@@ -135,7 +135,7 @@ class FormatterTests(unittest.TestCase):
                                  'experience_id': 'between1And3', 'premium': 'True', 'salary_from': '50000',
                                  'salary_to': '75000', 'salary_gross': 'True', 'salary_currency': 'RUR',
                                  'area_name': 'Москва', 'published_at': '2022-07-05T18:19:30+0300'})]
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').formatter(header, input_value)[0].published_at,
+        self.assertEqual(DataSet('../Data/vacancies.csv').formatter(header, input_value)[0].published_at,
                          output_value[0].published_at)
 
 
@@ -143,22 +143,22 @@ class IsCorrectLineTests(unittest.TestCase):
     def test_IsCorrectLine_correct(self):
         line = ['some', 'body', 'once', 'told', 'me']
         header_length = 5
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').is_correct_line(line, header_length), True)
+        self.assertEqual(DataSet('../Data/vacancies.csv').is_correct_line(line, header_length), True)
 
     def test_IsCorrectLine_incorrect_length(self):
         line = ['some', 'body', 'once', 'told', 'me']
         header_length = 6
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').is_correct_line(line, header_length), False)
+        self.assertEqual(DataSet('../Data/vacancies.csv').is_correct_line(line, header_length), False)
 
     def test_IsCorrectLine_incorrect_empty(self):
         line = ['some', 'body', '', 'told', 'me']
         header_length = 5
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').is_correct_line(line, header_length), False)
+        self.assertEqual(DataSet('../Data/vacancies.csv').is_correct_line(line, header_length), False)
 
     def test_IsCorrectLine_incorrect_length_empty(self):
         line = ['some', 'body', '', 'told', 'me']
         header_length = 6
-        self.assertEqual(DataSet('../StatsFiles/vacancies.csv').is_correct_line(line, header_length), False)
+        self.assertEqual(DataSet('../Data/vacancies.csv').is_correct_line(line, header_length), False)
 
 if __name__ == '__main__':
     unittest.main()

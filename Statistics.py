@@ -79,13 +79,13 @@ class Statistics:
                  'salary_by_city': {}, 'count_by_city': {}}
 
         for vacancy in vacancies:
-            self.update_stats(year, vacancy.salary.average_salary, stats['salary_by_year'])
+            self.update_stats(year, vacancy.salary, stats['salary_by_year'])
             self.update_stats(year, 1, stats['count_by_year'])
             if self.vacancie_name in vacancy.name:
-                self.update_stats(year, vacancy.salary.average_salary,
+                self.update_stats(year, vacancy.salary,
                                   stats['prof_salary_by_year'])
                 self.update_stats(year, 1, stats['prof_count_by_year'])
-            self.update_stats(vacancy.area_name, vacancy.salary.average_salary, stats['salary_by_city'])
+            self.update_stats(vacancy.area_name, vacancy.salary, stats['salary_by_city'])
             self.update_stats(vacancy.area_name, 1, stats['count_by_city'])
         self.get_average_salary(stats['salary_by_year'], stats['count_by_year'])
         self.get_average_salary(stats['prof_salary_by_year'], stats['prof_count_by_year'])

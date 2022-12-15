@@ -1,5 +1,6 @@
 import math
 import time
+from pandas import DataFrame
 from VacancyInf.Salary import Salary
 
 
@@ -29,7 +30,7 @@ class Vacancie:
         published_at (str): Время публикации
     """
 
-    def __init__(self, args: dict):
+    def __init__(self, args: dict, currencies: DataFrame):
         """
         Инициализирует вакансию
 
@@ -42,21 +43,34 @@ class Vacancie:
         self.experience_id = args['experience_id'] if 'experience_id' in args.keys() else ''
         self.premium = args['premium'] if 'premium' in args.keys() else ''
         self.employer_name = args['employer_name'] if 'employer_name' in args.keys() else ''
-        self.salary = Salary(args)
-        self.area_name = args['area_name'] if 'area_name' in args.keys() else ''
         self.published_at = args['published_at'] if 'published_at' in args.keys() else ''
+        self.salary = self.get_salary(args, currencies)
+        self.area_name = args['area_name'] if 'area_name' in args.keys() else ''
 
     @property
     def translate(self) -> dict:
         return {"noExperience": "Нет опыта", "between1And3": "От 1 года до 3 лет", "between3And6": "От 3 до 6 лет",
-                 "moreThan6": "Более 6 лет", "AZN": "Манаты", "BYR": "Белорусские рубли", "EUR": "Евро",
-                 "GEL": "Грузинский лари", "KGS": "Киргизский сом", "KZT": "Тенге", "RUR": "Рубли", "UAH": "Гривны",
-                 "USD": "Доллары", "UZS": "Узбекский сум", "TRUE": 'Без вычета налогов', "True": 'Без вычета налогов',
-                 "FALSE": 'С вычетом налогов', "False": 'С вычетом налогов'
-                 }
+                "moreThan6": "Более 6 лет", "AZN": "Манаты", "BYR": "Белорусские рубли", "EUR": "Евро",
+                "GEL": "Грузинский лари", "KGS": "Киргизский сом", "KZT": "Тенге", "RUR": "Рубли", "UAH": "Гривны",
+                "USD": "Доллары", "UZS": "Узбекский сум", "TRUE": 'Без вычета налогов', "True": 'Без вычета налогов',
+                "FALSE": 'С вычетом налогов', "False": 'С вычетом налогов'
+                }
+
     @property
     def reversedTranslate(self):
         return dict(zip(self.translate.values(), self.translate.keys()))
+
+    def get_salary(self, args: dict, currencies: DataFrame):
+        if args['salary_from'] == '':
+            salary = float(args['salary_to'])
+        elif args['salary_to'] == '':
+            salary = float(args['salary_from'])
+        else:
+            salary = ((float(args['salary_from']) + float(args['salary_to'])) / 2)
+        if args['salary_currency'] != 'RUR':
+            return salary * float(currencies.loc[self.get_published_at_month_year()][args['salary_currency']])
+        else:
+            return salary
 
     def get_published_at_year(self) -> int:
         """
@@ -66,6 +80,9 @@ class Vacancie:
             int: Год публикации
         """
         return int(self.published_at[0:4])
+
+    def get_published_at_month_year(self):
+        return f'{self.published_at[5:7]}/{self.get_published_at_year()}'
 
     def get_russian_format(self) -> list:
         """

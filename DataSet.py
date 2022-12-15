@@ -1,6 +1,6 @@
 import csv
-import math
 import re
+from Currencies import Currencies
 from VacancyInf.Vacancie import Vacancie
 
 """Рейтинг опыта работы"""
@@ -17,6 +17,7 @@ class DataSet:
         file_name (str): Имя обрабатываемого файла
         vacancies_objects (list): Объекты вакансий
     """
+
     def __init__(self, file_name):
         """
         Инициализирует объект DataSet, парсит csv файл
@@ -27,6 +28,7 @@ class DataSet:
         self.is_empty = False
         self.error_massage = ''
         self.file_name = file_name
+        self.currencies = Currencies.get_currencies_in_dataframe()
         self.vacancies_objects = self.csv_reader()
 
     def csv_reader(self) -> tuple or str:
@@ -63,7 +65,8 @@ class DataSet:
         Returns:
              bool: Значение, корректна ли строка
         """
-        return '' not in line and len(line) == header_length
+        return len(list(filter(None, line))) >= header_length - 1 and line[3] in ['RUR', 'USD', 'EUR', 'KZT', 'UAH',
+                                                                                  'BYR']
 
     def clean_line(self, line: str) -> str:
         """
@@ -94,6 +97,5 @@ class DataSet:
             vacancies_dict = {}
             for i in range(len(header)):
                 vacancies_dict[header[i]] = self.clean_line(row[i])
-            vacancies.append(Vacancie(vacancies_dict))
+            vacancies.append(Vacancie(vacancies_dict, self.currencies))
         return vacancies
-
