@@ -1,7 +1,7 @@
 import csv
 import re
 from Currencies import Currencies
-from VacancyInf.Vacancie import Vacancie
+from VacancyInf.Vacancy import Vacancie
 
 """Рейтинг опыта работы"""
 experience_rate = {"noExperience": 0, "between1And3": 1, "between3And6": 2, "moreThan6": 3}
