@@ -1,6 +1,8 @@
 import calendar
 import csv
 import datetime
+import math
+
 import requests
 import xmltodict
 import pandas as pd
@@ -30,8 +32,8 @@ class Currencies:
             file_name (str): Файл, для которого необходимо получить данные по валютам
         """
         min_date, max_date = Currencies.__get_min_max_dates(file_name)
-        dates = []
         currencies = Currencies.__get_currencies_with_enough_count(file_name)
+        dates = []
         while min_date <= max_date:
             str_date = datetime.datetime.strftime(min_date, "%m/%Y")
             url = f'http://www.cbr.ru/scripts/XML_daily.asp?date_req=01/{str_date}=1'
@@ -45,8 +47,12 @@ class Currencies:
                     currencies['BYR'].append(float(cur['Value'].replace(',', '.')) / float(cur['Nominal']))
             days_in_month = calendar.monthrange(min_date.year, min_date.month)[1]
             min_date += datetime.timedelta(days=days_in_month)
+        for key, value in currencies.items():
+            print(f'{key} {value}')
         df = pd.DataFrame(data=currencies, index=dates)
-        df.to_csv('Data/currencies')
+        df.index.rename('date', inplace=True)
+
+        df.to_csv('Data/currencies.csv', )
 
     @staticmethod
     def __get_min_max_dates(file_name: str) -> tuple[datetime, datetime]:
@@ -60,14 +66,13 @@ class Currencies:
         """
         min_date = datetime.datetime.strptime('3000-01-01T00:00:00+0000', '%Y-%m-%dT%H:%M:%S%z')
         max_date = datetime.datetime.strptime('1000-01-01T00:00:00+0000', '%Y-%m-%dT%H:%M:%S%z')
-        with open(file_name, encoding='utf-8') as csv_file:
-            file = csv.reader(csv_file)
-            for line in file:
-                date = datetime.datetime.strptime(line[5], '%Y-%m-%dT%H:%M:%S%z')
-                if date > max_date:
-                    max_date = date
-                if date < min_date:
-                    min_date = date
+        vacancies_dataframe = pd.DataFrame(pd.read_csv(file_name))
+        for line in vacancies_dataframe.itertuples():
+            date = datetime.datetime.strptime(line[6], '%Y-%m-%dT%H:%M:%S%z')
+            if date > max_date:
+                max_date = date
+            if date < min_date:
+                min_date = date
         min_date = datetime.datetime.strptime(f'{min_date.month}/{min_date.year}', '%m/%Y')
         max_date = datetime.datetime.strptime(f'{max_date.month}/{max_date.year}', '%m/%Y')
         return min_date, max_date
@@ -83,16 +88,19 @@ class Currencies:
             dict[str, list]: Словарь с ключом-валютой и значением-листом для последующей обработки
         """
         currencies = {}
-        with open(file_name, encoding='utf-8') as csv_file:
-            file = csv.reader(csv_file)
-            for line in file:
-                cur = line[4]
-                if cur in currencies.keys():
-                    currencies[cur] += 1
-                else:
-                    currencies[cur] = 1
+        vacancies_dataframe = pd.DataFrame(pd.read_csv(file_name))
+        for line in vacancies_dataframe.itertuples():
+            cur = line[4]
+            if str(cur) == 'nan' or cur == 'RUR':
+                continue
+            elif cur in currencies.keys():
+                currencies[cur] += 1
+            else:
+                currencies[cur] = 1
         result_currencies = {}
         for key, value in currencies.items():
             if value > 5000:
                 result_currencies[key] = []
         return result_currencies
+
+Currencies.save_currencies_in_csv('Data/vacancies_dif_currencies.csv')
