@@ -2,6 +2,7 @@ import pdfkit
 from jinja2 import Environment, FileSystemLoader
 from openpyxl import Workbook
 
+
 class PdfCreator:
     """Класс для создания отчета в виде pdf файла"""
 

@@ -4,14 +4,16 @@ from Statistics import Statistics
 
 
 class ExcelCreator:
-    """Класс для создания Excel таблицы со статистикой
+    """
+    Класс для создания Excel таблицы со статистикой
 
     Attributes:
         workbook (Workbook): Excel таблица
     """
 
     def __init__(self, stats: Statistics):
-        """Инициализирует класс, создавая таблицу
+        """
+        Инициализирует класс, создавая таблицу
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -19,7 +21,8 @@ class ExcelCreator:
         self.workbook = self.initialize_workbook(stats)
 
     def initialize_workbook(self, stats: Statistics) -> Workbook:
-        """Инициализирует таблицу и добавляет в нее данные
+        """
+        Инициализирует таблицу и добавляет в нее данные
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -33,7 +36,8 @@ class ExcelCreator:
         return workbook
 
     def create_workbook(self, vacancie_name: str) -> tuple:
-        """Создает excel таблицу, добавляет в нее 2 листа, задает заголовки
+        """
+        Создает excel таблицу, добавляет в нее 2 листа, задает заголовки
 
         Args:
             vacancie_name (str): Название профессии, по которой собрана статистика
@@ -55,30 +59,32 @@ class ExcelCreator:
 
     def add_stats_to_excel(self, stats: Statistics, years_sheet: Workbook.worksheets,
                            cities_sheet: Workbook.worksheets):
-        """Добавляет статистику в таблицу excel
+        """
+        Добавляет статистику в таблицу excel
 
         Args:
             stats (Statistics): Статистика по вакансиям
             years_sheet (Workbook.worksheets): Excel лист с статистикой по годам
             cities_sheet (Workbook.worksheets): Excel лист с статистикой по городам
         """
-        for year in stats.salary_by_year.keys():
+        for year in stats.stats.index:
             years_sheet.append([year,
-                                stats.salary_by_year[year],
-                                stats.prof_salary_by_year[year],
-                                stats.count_by_year[year],
-                                stats.prof_salary_by_year[year]])
+                                stats.stats.loc[year]['salary_by_year'],
+                                stats.stats.loc[year]['prof_salary_by_year'],
+                                stats.stats.loc[year]['count_by_year'],
+                                stats.stats.loc[year]['prof_count_by_year']])
 
-        for city in stats.salary_by_city.keys():
-            cities_sheet.append([city, stats.salary_by_city[city]])
-
-        for i, city in enumerate(stats.count_by_city.keys(), 2):
-            cities_sheet[f'D{i}'].value = city
-            cities_sheet[f'E{i}'].value = f'{round(stats.count_by_city[city] * 100, 2)}%'
+        # for city in stats.salary_by_city.keys():
+        #     cities_sheet.append([city, stats.salary_by_city[city]])
+        #
+        # for i, city in enumerate(stats.count_by_city.keys(), 2):
+        #     cities_sheet[f'D{i}'].value = city
+        #     cities_sheet[f'E{i}'].value = f'{round(stats.count_by_city[city] * 100, 2)}%'
 
     def set_sheets_settings(self, stats: Statistics, years_sheet: Workbook.worksheets,
                             cities_sheet: Workbook.worksheets) -> None:
-        """Устанавливает настройки для таблицы
+        """
+        Устанавливает настройки для таблицы
 
         Args:
             stats (Statistics): Статистика по вакансиям
@@ -95,11 +101,11 @@ class ExcelCreator:
 
         thins = Side(border_style="thin")
         for column in used_columns:
-            for row in range(1, len(stats.salary_by_year.keys()) + 2):
+            for row in range(1, len(stats.stats.index) + 2):
                 years_sheet[f'{column}{row}'].border = Border(top=thins, bottom=thins, left=thins, right=thins)
 
-        for column in used_columns:
-            for row in range(1, len(stats.salary_by_city.keys()) + 2):
-                if column == 'C':
-                    break
-                cities_sheet[f'{column}{row}'].border = Border(top=thins, bottom=thins, left=thins, right=thins)
+        # for column in used_columns:
+        #     for row in range(1, len(stats.salary_by_city.keys()) + 2):
+        #         if column == 'C':
+        #             break
+        #         cities_sheet[f'{column}{row}'].border = Border(top=thins, bottom=thins, left=thins, right=thins)
