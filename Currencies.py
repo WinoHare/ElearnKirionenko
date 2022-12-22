@@ -3,6 +3,7 @@ import datetime
 import requests
 import xmltodict
 import pandas as pd
+import sqlite3
 
 
 class Currencies:
@@ -19,6 +20,18 @@ class Currencies:
         """
         csv_file = pd.read_csv('Data/currencies.csv', index_col='date')
         return csv_file
+
+    @staticmethod
+    def save_currencies_in_db():
+        csv_file = Currencies.get_currencies_in_dataframe()
+        connect = sqlite3.connect('Data/currencies_database.db')
+        cursor = connect.cursor()
+        cursor.execute('CREATE TABLE IF NOT EXISTS currencies (currency TEXT)')
+        for column in csv_file.columns:
+            cursor.execute(f'ALTER TABLE currencies ADD {column} REAL', )
+        for row in csv_file.itertuples():
+            cursor.execute(f'INSERT INTO currencies VALUES ({row[0]}, {row[1]}, {row[2]}, {row[3]}, {row[4]}, {row[5]})')
+        connect.commit()
 
     @staticmethod
     def save_currencies_in_csv(file_name: str) -> None:
@@ -84,3 +97,4 @@ class Currencies:
             currencies[currency] = []
         return currencies
 
+print(Currencies.save_currencies_in_db())
