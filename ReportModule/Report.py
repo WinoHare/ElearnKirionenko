@@ -12,16 +12,17 @@ class Report:
         statistics (Statistics): Статистика по вакансиям
     """
 
-    def __init__(self, vacancie_name: str):
+    def __init__(self, vacancie_name: str, area_name: str):
         """
         Собирает статистику и создает отчет
 
         Args:
             vacancie_name (str): Название вакансии, по которой собирается статистика
+            area_name (str): Название региона, по которому собирается статистика
         """
-        self.statistics = Statistics(vacancie_name)
+        self.statistics = Statistics(vacancie_name, area_name)
         self.statistics.get_statistics()
 
         GraphsCreator(self.statistics)
-        PdfCreator(vacancie_name, ExcelCreator(self.statistics).workbook, len(self.statistics.stats.index),
-                   len([]))
+        PdfCreator(vacancie_name, area_name, ExcelCreator(self.statistics).workbook,
+                   len(self.statistics.years_dataframe.index))

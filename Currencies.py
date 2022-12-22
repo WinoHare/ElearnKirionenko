@@ -61,17 +61,9 @@ class Currencies:
         Returns:
              tuple[datetime, datetime]: Самая ранняя и поздняя даты
         """
-        min_date = datetime.datetime.strptime('3000-01-01T00:00:00+0000', '%Y-%m-%dT%H:%M:%S%z')
-        max_date = datetime.datetime.strptime('1000-01-01T00:00:00+0000', '%Y-%m-%dT%H:%M:%S%z')
         vacancies_dataframe = pd.read_csv(file_name)
-        for line in vacancies_dataframe.itertuples():
-            date = datetime.datetime.strptime(line[6], '%Y-%m-%dT%H:%M:%S%z')
-            if date > max_date:
-                max_date = date
-            if date < min_date:
-                min_date = date
-        min_date = datetime.datetime.strptime(f'{min_date.month}/{min_date.year}', '%m/%Y')
-        max_date = datetime.datetime.strptime(f'{max_date.month}/{max_date.year}', '%m/%Y')
+        min_date = vacancies_dataframe.agg({'published_at': 'min'})
+        max_date = vacancies_dataframe.agg({'published_at': 'max'})
         return min_date, max_date
 
     @staticmethod
@@ -84,18 +76,11 @@ class Currencies:
         Return:
             dict[str, list]: Словарь с ключом-валютой и значением-листом для последующей обработки
         """
-        currencies = {}
         vacancies_dataframe = pd.read_csv(file_name)
-        for line in vacancies_dataframe.itertuples():
-            cur = line[4]
-            if str(cur) == 'nan' or cur == 'RUR':
-                continue
-            elif cur in currencies.keys():
-                currencies[cur] += 1
-            else:
-                currencies[cur] = 1
-        result_currencies = {}
-        for key, value in currencies.items():
-            if value > 5000:
-                result_currencies[key] = []
-        return result_currencies
+        frequency = vacancies_dataframe.groupby('salary_currency').agg({'salary_currency': 'count'})\
+            .query('salary_currency > 5000 & index != "RUR"')
+        currencies = {}
+        for currency in frequency.index:
+            currencies[currency] = []
+        return currencies
+

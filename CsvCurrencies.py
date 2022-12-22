@@ -1,4 +1,7 @@
 import math
+import re
+
+import numpy as np
 import pandas as pd
 from Currencies import Currencies
 
@@ -30,11 +33,25 @@ class CsvCurrencies:
             file_name (str): Имя обрабатываемого файла
         """
         vacancies_dataframe = pd.read_csv(file_name)
+        vacancies_dataframe['area_name'] = vacancies_dataframe.apply(lambda v: self.clean_line(v), axis=1)
         vacancies_dataframe['salary'] = vacancies_dataframe.apply(lambda v: self.get_salary(v), axis=1)
         vacancies_dataframe = vacancies_dataframe.dropna(subset=['salary'])
 
+
         vacancies_dataframe[['name', 'salary', 'area_name', 'published_at']]\
             .to_csv('Data/csv_vacancies.csv', float_format='%.0f', index=False)
+
+    def new_get_salary(self, df_):
+        return np.select(
+            condlist=(
+                df_.isin({'salary_from': range(1000000), 'salary_to': range(1000000)}),
+                df_.isin({'salary_from': range(1000000), 'salary_to': range(1000000)}),
+                df_.isin({'salary_from': range(1000000), 'salary_to': range(1000000)}),
+            ),
+            choicelist=(((float(df_['salary_from']) + float(df_['salary_to'])) / 2),
+                        float(df_['salary_to']), float(df_['salary_from'])),
+            default=math.nan
+        )
 
     def get_salary(self, line: pd.Series) -> float or None:
         """
@@ -60,6 +77,20 @@ class CsvCurrencies:
                                   [line['salary_currency']])
         else:
             return salary
+
+    def clean_line(self, line) -> str:
+        """Чистит строку от лишних пробелов и html тэгов
+        Args:
+            line (str): Строка для очистки
+        Returns:
+            str: Очищенная строка
+        'string to clean'
+        """
+        string = line['area_name']
+        string = re.sub('<[^<]+?>', '', string).replace('\xa0', ' ').replace(" ", ' ').strip()
+        while '  ' in string:
+            string = string.replace('  ', ' ')
+        return string
 
     def get_published_at_month_year(self, line: str) -> str:
         return f'{line[5:7]}/{line[:4]}'
