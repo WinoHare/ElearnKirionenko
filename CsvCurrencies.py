@@ -1,6 +1,6 @@
 import math
 import re
-
+import sqlite3
 import numpy as np
 import pandas as pd
 from Currencies import Currencies
@@ -13,6 +13,7 @@ class CsvCurrencies:
     Attributes:
         currencies (DataFrame): Таблица с курсами вакансий по месяцам
     """
+
     def __init__(self, file_name: str):
         """
         Инициализирует класс и запускает обработку файла
@@ -23,23 +24,37 @@ class CsvCurrencies:
         self.currencies = Currencies.get_currencies_in_dataframe()
         self.currencies_names = list(self.currencies)
         self.currencies_names.append('RUR')
-        self.handleCsv(file_name)
+        self.cursor = self.get_database_cursor()
+        self.save_vacancies_in_db(file_name)
 
-    def handleCsv(self, file_name: str) -> None:
+    def handleCsv(self, file_name: str) -> pd.DataFrame:
         """
         Создает новый файл со средними зарплатами в рублях
 
         Args:
             file_name (str): Имя обрабатываемого файла
+        Returns:
+            DataFrame: Фрейм с вакансиями
         """
         vacancies_dataframe = pd.read_csv(file_name)
         vacancies_dataframe['area_name'] = vacancies_dataframe.apply(lambda v: self.clean_line(v), axis=1)
         vacancies_dataframe['salary'] = vacancies_dataframe.apply(lambda v: self.get_salary(v), axis=1)
         vacancies_dataframe = vacancies_dataframe.dropna(subset=['salary'])
+        return vacancies_dataframe[['name', 'salary', 'area_name', 'published_at']]
 
+    def save_vacancies_in_db(self, file_name: str):
+        vacancies_dataframe = self.handleCsv(file_name)
 
-        vacancies_dataframe[['name', 'salary', 'area_name', 'published_at']]\
-            .to_csv('Data/csv_vacancies.csv', float_format='%.0f', index=False)
+        connect = sqlite3.connect('Data/vacancies_database.db')
+        cursor = connect.cursor()
+        cursor.execute('CREATE TABLE IF NOT EXISTS vacancies (name TEXT)')
+        connect.commit()
+        vacancies_dataframe.to_sql('vacancies', connect, if_exists='replace')
+
+    def get_database_cursor(self):
+        connect = sqlite3.connect('Data/currencies_database.db')
+        cursor = connect.cursor()
+        return cursor
 
     def new_get_salary(self, df_):
         return np.select(
@@ -73,10 +88,14 @@ class CsvCurrencies:
         else:
             salary = ((float(line['salary_from']) + float(line['salary_to'])) / 2)
         if line['salary_currency'] != 'RUR':
-            return salary * float(self.currencies.loc[self.get_published_at_month_year(line['published_at'])]
-                                  [line['salary_currency']])
+            return math.floor(salary * self.get_currency_rate(line))
         else:
-            return salary
+            return math.floor(salary)
+
+    def get_currency_rate(self, line):
+        return self.cursor.execute(f'SELECT {line["salary_currency"]} FROM currencies WHERE'
+                                   f' date = "{self.get_published_at_month_year(line["published_at"])}"')\
+            .fetchone()[0]
 
     def clean_line(self, line) -> str:
         """Чистит строку от лишних пробелов и html тэгов
@@ -94,5 +113,6 @@ class CsvCurrencies:
 
     def get_published_at_month_year(self, line: str) -> str:
         return f'{line[5:7]}/{line[:4]}'
+
 
 CsvCurrencies('Data/vacancies_dif_currencies.csv')

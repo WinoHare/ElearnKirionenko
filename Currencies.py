@@ -24,14 +24,13 @@ class Currencies:
     @staticmethod
     def save_currencies_in_db():
         csv_file = Currencies.get_currencies_in_dataframe()
+
         connect = sqlite3.connect('Data/currencies_database.db')
         cursor = connect.cursor()
         cursor.execute('CREATE TABLE IF NOT EXISTS currencies (currency TEXT)')
-        for column in csv_file.columns:
-            cursor.execute(f'ALTER TABLE currencies ADD {column} REAL', )
-        for row in csv_file.itertuples():
-            cursor.execute(f'INSERT INTO currencies VALUES ({row[0]}, {row[1]}, {row[2]}, {row[3]}, {row[4]}, {row[5]})')
         connect.commit()
+        csv_file.to_sql('currencies', connect, if_exists='replace')
+
 
     @staticmethod
     def save_currencies_in_csv(file_name: str) -> None:
@@ -96,5 +95,3 @@ class Currencies:
         for currency in frequency.index:
             currencies[currency] = []
         return currencies
-
-print(Currencies.save_currencies_in_db())
