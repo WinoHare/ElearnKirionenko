@@ -67,21 +67,19 @@ class ExcelCreator:
             years_sheet (Workbook.worksheets): Excel лист с статистикой по годам
             cities_sheet (Workbook.worksheets): Excel лист с статистикой по городам
         """
-        for year in statistics.years_dataframe.index:
+        for year in statistics.years_df.index:
             years_sheet.append([year,
-                                statistics.years_dataframe.loc[year]['salary'],
-                                statistics.years_dataframe.loc[year]['prof_salary'],
-                                statistics.years_dataframe.loc[year]['count'],
-                                statistics.years_dataframe.loc[year]['prof_count']])
+                                statistics.years_df.loc[year]['salary'],
+                                statistics.years_df.loc[year]['prof_salary'],
+                                statistics.years_df.loc[year]['count'],
+                                statistics.years_df.loc[year]['prof_count']])
 
-        cities_df = statistics.sort_dataframe('salary')
-        for city in cities_df.index:
-            cities_sheet.append([city, cities_df.loc[city]['salary']])
+        for city in statistics.cities_salary_df.index:
+            cities_sheet.append([city, statistics.cities_salary_df.loc[city]['salary']])
 
-        cities_df = statistics.sort_dataframe('percent')
-        for i, city in enumerate(cities_df.index, 2):
+        for i, city in enumerate(statistics.cities_percent_df.index, 2):
             cities_sheet[f'D{i}'].value = city
-            cities_sheet[f'E{i}'].value = f'{round(cities_df.loc[city]["percent"], 2)}%'
+            cities_sheet[f'E{i}'].value = f'{round(statistics.cities_percent_df.loc[city]["percent"], 2)}%'
 
     def set_sheets_settings(self, stats: Statistics, years_sheet: Workbook.worksheets,
                             cities_sheet: Workbook.worksheets) -> None:
@@ -103,11 +101,11 @@ class ExcelCreator:
 
         thins = Side(border_style="thin")
         for column in used_columns:
-            for row in range(1, len(stats.years_dataframe.index) + 2):
+            for row in range(1, 12):
                 years_sheet[f'{column}{row}'].border = Border(top=thins, bottom=thins, left=thins, right=thins)
 
         for column in used_columns:
-            for row in range(1, len(stats.years_dataframe.index) + 2):
+            for row in range(1, len(stats.years_df.index) + 2):
                 if column == 'C':
                     break
                 cities_sheet[f'{column}{row}'].border = Border(top=thins, bottom=thins, left=thins, right=thins)

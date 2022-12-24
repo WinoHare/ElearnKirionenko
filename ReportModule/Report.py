@@ -25,4 +25,4 @@ class Report:
 
         GraphsCreator(self.statistics)
         PdfCreator(vacancie_name, area_name, ExcelCreator(self.statistics).workbook,
-                   len(self.statistics.years_dataframe.index))
+                   len(self.statistics.years_df.index))

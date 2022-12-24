@@ -45,11 +45,11 @@ class GraphsCreator:
         first = plt.subplot(221)
         plt.tick_params(axis='x', which='major', labelsize=8, rotation=90)
         plt.tick_params(axis='y', which='major', labelsize=8)
-        first.bar(list(map(lambda y: y - 0.2, statistics.years_dataframe.index)),
-                  statistics.years_dataframe['salary'], width=0.4,
+        first.bar(list(map(lambda y: y - 0.2, statistics.years_df.index)),
+                  statistics.years_df['salary'], width=0.4,
                   label='Средняя з/п')
-        first.bar(list(map(lambda y: y + 0.2, statistics.years_dataframe.index)),
-                  statistics.years_dataframe['prof_salary'], width=0.4,
+        first.bar(list(map(lambda y: y + 0.2, statistics.years_df.index)),
+                  statistics.years_df['prof_salary'], width=0.4,
                   label=f'З/п {statistics.vacancie_name} по региону {statistics.area_name}')
         plt.legend(fontsize=8)
         plt.title('Уровень зарплат по годам', fontsize=12)
@@ -64,11 +64,11 @@ class GraphsCreator:
         second = plt.subplot(222)
         plt.tick_params(axis='x', which='major', labelsize=8, rotation=90)
         plt.tick_params(axis='y', which='major', labelsize=8)
-        second.bar(list(map(lambda y: y - 0.2, statistics.years_dataframe.index)),
-                   statistics.years_dataframe['count'], width=0.4,
+        second.bar(list(map(lambda y: y - 0.2, statistics.years_df.index)),
+                   statistics.years_df['count'], width=0.4,
                    label='Количество вакансий')
-        second.bar(list(map(lambda y: y + 0.2, statistics.years_dataframe.index)),
-                   statistics.years_dataframe['prof_count'].to_list(), width=0.4,
+        second.bar(list(map(lambda y: y + 0.2, statistics.years_df.index)),
+                   statistics.years_df['prof_count'].to_list(), width=0.4,
                    label=f'Количество вакансий {statistics.vacancie_name} по региону {statistics.area_name}')
         plt.legend(fontsize=8)
         plt.title('Количество вакансий по годам', fontsize=12)
@@ -83,8 +83,7 @@ class GraphsCreator:
         third = plt.subplot(223)
         plt.tick_params(axis='x', which='major', labelsize=8)
         plt.tick_params(axis='y', which='major', labelsize=6)
-        cities_df = statistics.sort_dataframe('salary')
-        third.barh(cities_df.index, cities_df['salary'])
+        third.barh(statistics.cities_salary_df.index, statistics.cities_salary_df['salary'])
         plt.title('Уровень зарплат по городам', fontsize=12)
 
     def create_count_by_city_plot(self, statistics: Statistics) -> None:
@@ -97,7 +96,7 @@ class GraphsCreator:
         statistics.get_percent_of_other_cities()
         fourth = plt.subplot(224)
         plt.rc('xtick', labelsize=6)
-        cities_df = statistics.sort_dataframe('percent')
+        cities_df = statistics.cities_percent_df
         cities_df.loc['Другие'] = statistics.get_percent_of_other_cities()
         fourth.pie(cities_df['percent'],
                    labels=cities_df.index,
