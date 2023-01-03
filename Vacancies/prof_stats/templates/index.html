@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{%static  "css/style.css" %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+  <title>Кто этот ваш PHP?</title>
+</head>
+<body>
+  <main>
+
+    <div class="header">
+      <nav class="navigation">
+        <ul class="navigation-list">
+          <li class="navigation-item">
+            <a href=".."><b>Главная</b></a>
+            </li>
+          <li class="navigation-item">
+            <a href="/demand">Востребованность</a>
+          </li>
+          <li class="navigation-item">
+            <a href="/geography">География</a>
+          </li>
+          <li class="navigation-item">
+            <a href="/skills">Навыки</a>
+          </li>
+          <li class="navigation-item">
+            <a href="/latest_vacancies">Последние вакансии</a>
+          </li>
+        </ul>
+      </nav>
+      <hr>
+    </div>
+
+    <h1>Кто этот ваш PHP разработчик?</h1>
+    <div class="php-image">
+      <img src="{%static  "images/who_is_php.jpg" %}" width="800" class="who-is-php"> 
+    </div>
+
+    <h2>Откуда все началось?</h2>
+    <div class="php-paragraph">
+      <img src="{%static  "images/rasmus.jpg" %}" width="550" class="paragraph-image">
+      <p class="paragraph-content">
+        Скриптовый язык программирования с открытым кодом Personal Home Page (PHP) изначально был создан Расмусом Лердоррфом в 1995 году, а спустя три года переиздан после серьезной переработки. Очень быстро он занял лидирующие позиции в сфере веб-проектирования, особенно серверной его части. Несмотря на свой почтенный для IT-сферы «возраст», PHP продолжает оставаться в десятке самых популярных языков программирования
+      </p>
+    </div>
+
+    <h2 class="reversed-title">А чем занимается?</h2>
+    <div class="php-paragraph reversed">
+      <img src="{%static  "images/php-logo.jpg" %}" width="550" class="paragraph-image">
+      <p class="paragraph-content">
+        Программист PHP выполняет основную работу по созданию web-сайта. Фактически он готовит фундамент, крышу, стены и все несущие конструкции, если провести аналогию со строительством. Конечные продукты труда PHP-программистов – это интернет-магазины, порталы, корпоративные сайты, платформы онлайн-обучения, системы доставки, бронирования, форумы, социальные сети и многое другое.
+      </p>
+    </div>
+
+    <div class="todo">
+    <h2>Что по задачам?</h2>
+      <ol class="todo-list">
+        <li class="todo-item">Разработка страниц или модулей сайта на языке PHP</li>
+        <li class="todo-item">Тестирование созданного продукта</li>
+        <li class="todo-item">Выявление и исправление ошибок</li>
+        <li class="todo-item">Запуск продукта</li>
+        <li class="todo-item">Администрирование</li>
+        <li class="todo-item">Обеспечение безопасности разработанного продукта</li>
+        <li class="todo-item">Оптимизация производительности</li>
+        <li class="todo-item">Цсовершенствование функциональности продукта</li>
+        <li class="todo-item">Исправление багов</li>
+        <li class="todo-item">Работа с техническими специалистами (ТЗ, контроль, консультации)</li>
+        <li class="todo-item">Интеграция созданного продукта со всеми видами бизнес-систем, которые необходимы заказчику</li>
+        <li class="todo-item">Работа с документацией, сопровождение продукта</li>
+      </ol>
+    </div>
+
+    <div class="toknow">
+      <h2>Что нужно знать для Джуна?</h2>
+      <ul class="toknow-list">
+        <li class="toknow-item">
+          <img src="{%static  "images/cms.png" %}" width="64">
+          <p>CMS</p>
+        </li>
+        <li class="toknow-item">
+          <img src="{%static  "images/php.png" %}" width="64">
+          <p>PHP</p>
+        </li>
+        <li class="toknow-item">
+          <img src="{%static  "images/mysql.png" %}" width="64">
+          <p>СУБД MySql</p>
+        </li>
+        <li class="toknow-item">
+          <img src="{%static  "images/oop.png" %}" width="64">
+          <p>Основы ООП</p>
+        </li>
+        <li class="toknow-item">
+          <img src="{%static  "images/git.png" %}" width="64">
+          <p>Git</p>
+        </li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Кирионенко Михаил Александрович</p>
+    <p>РИ-210941</p>
+    <a href="https://github.com/WinoHare/ElearnKirionenko/tree/project">
+      <img src="{%static  "images/github.png" %}" alt="GitHub" width="50">
+    </a>
+  </footer>
+</body>

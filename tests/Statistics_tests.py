@@ -1,5 +1,5 @@
 import unittest
-from Statistics import Statistics
+from Vacancies.processing.Statistics import Statistics
 
 class UpdateStats_tests(unittest.TestCase):
     def test_first(self):

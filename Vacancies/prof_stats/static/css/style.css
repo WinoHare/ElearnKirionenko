@@ -1,0 +1,272 @@
+body {
+    background: #E5E5E5;
+    font-family: 'Noto Serif', serif;
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    max-width: 1010px;
+    margin: 0;
+    padding-bottom: 0;
+    background-color: #E5E5E5;  
+    position: fixed;  
+    top: 0;  
+    z-index: 100;  
+    width: 100%;
+}
+
+hr {
+    margin: 0;
+}
+
+main {
+    max-width: 1010px;
+    margin-left: 240px;
+}
+
+footer {
+    background: #9f9f9f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+}
+
+h2 {
+    margin-bottom: 50px;
+}
+
+.navigation-list {
+    padding: 0;
+    margin: 0;
+    margin-top: 33px;
+    margin-bottom: 33px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 18px;
+    justify-content: space-between;
+}
+
+.navigation-item:last-child {
+    margin-right: 0;
+}
+
+.navigation-item a {
+    color: #070707;
+    text-decoration: none;
+}
+
+.navigation-item a:hover {
+    opacity: 0.5;
+}
+
+.navigation-item a:active {
+    opacity: 0.3;
+}
+
+h1 {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.who-is-php {
+    margin-left: 110px;
+    margin-bottom: 100px;
+}
+
+.php-paragraph {
+    display: flex;
+    margin-bottom: 100px;
+    
+}
+
+.php-paragraph.reversed {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.php-paragraph.reversed .paragraph-image{
+    margin: 0;
+    margin-left: 50px;
+}
+
+.paragraph-image {
+    margin-right: 50px;
+}
+
+.paragraph-content {
+    margin: 0;
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.reversed-title {
+    text-align: right;
+}
+
+.todo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todo-list {
+    list-style: none;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.todo-item {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.toknow {
+    margin-bottom: 100px;
+}
+
+.toknow-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.toknow-item {
+    text-align: center;
+    font-size: 18px;
+}
+
+.toknow h2 {
+    text-align: center;
+}
+
+.years-statistics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.years-statistics-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 450px;
+    border: #070707;
+}
+
+.skills {
+    justify-content: center;
+    margin-bottom: 50px;
+    margin-left: 275px;
+}
+
+.years-statistics-item h2 {
+    font-size: 24px;
+    text-align: center;
+}
+
+.stats-table {
+    text-align: center;
+    border-collapse: collapse;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+.stats-table-item {
+    border: 2px solid black;
+    width: 220px;
+}
+
+footer p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.vacancies-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vacancy {
+    width: 450px;
+    border: 1px solid grey;
+    margin-bottom: 30px;
+}
+
+.vacancy-url {
+    color:#070707;
+    text-decoration: none;
+}
+
+.vacancy-title {
+    font-size: 18px;
+    text-align: center;
+}
+
+.vacancy-description, .vacancy-skills, .vacancy-company, .vacancy-salary, .vacancy-area-name, .vacancy-published-at {
+    font-size: 14px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.table-button {
+    background-color: #b9b6b6;
+    height: 40px;
+    border: 1px solid #9f9f9f;
+}
+
+.table-button:hover {
+    background-color: #c7c7c7;
+}
+
+.table-button:active {
+    background-color: #dbdada;
+}
+
+.stats-image {
+    margin-bottom: 30px;
+}
+
+.stats-form {
+    position: fixed;
+    width: 500px;
+    top: 20%;
+    left: 32%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #9f9f9f;
+}
+
+.close {
+    width: 450px;
+    height: 30px;
+    margin-left: 25px;
+    background-color: #b9b6b6;
+    border: 1px solid #9f9f9f;
+}
+
+.close:hover {
+    background-color: #c7c7c7;
+}
+
+.close:active {
+    background-color: #dbdada;
+}

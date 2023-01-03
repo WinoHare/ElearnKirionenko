@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{%static  "css/style.css" %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+  <title>Последние вакансии</title>
+</head>
+<body>
+  <main>
+
+    <div class="header">
+        <nav class="navigation">
+          <ul class="navigation-list">
+            <li class="navigation-item">
+              <a href="..">Главная</a>
+              </li>
+            <li class="navigation-item">
+              <a href="/demand">Востребованность</a>
+            </li>
+            <li class="navigation-item">
+              <a href="/geography">География</a>
+            </li>
+            <li class="navigation-item">
+              <a href="/skills">Навыки</a>
+            </li>
+            <li class="navigation-item">
+              <a href="/latest_vacancies"><b>Последние вакансии</b></a>
+            </li>
+          </ul>
+        </nav>
+        <hr>
+      </div>
+    <h1>Последние вакансии</h1>
+
+    <div class="vacancies-list">
+      {% for vacancy in vacancies %}
+      <div class="vacancy">
+        <a href="{{vacancy.url}}" class="vacancy-url">
+          <h3 class="vacancy-title">{{ vacancy.name }}</h3>
+        </a>
+        {% if vacancy.description != "['description']" %}
+        <p class="vacancy-description">{{vacancy.description}}</p>
+        {% endif %}
+
+        {% if vacancy.skills != "" %}
+        <p class="vacancy-skills">Необходимые скилы: {{vacancy.skills}}</p>
+        {% endif %}
+
+        {% if vacancy.company != "" %}
+        <p class="vacancy-company">Компания: {{vacancy.company}}</p>
+        {% endif %}
+
+        {% if vacancy.salary != 0 %}
+        <p class="vacancy-salary">Оклад: {{vacancy.salary}} рублей</p>
+        {% endif %}
+
+        {% if vacancy.area_name != 0 %}
+        <p class="vacancy-area-name">Где работать: {{vacancy.area_name}}</p>
+        {% endif %}
+
+        {% if vacancy.published_at != 0 %}
+        <p class="vacancy-published-at">Дата публикация: {{vacancy.published_at.date}}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer>
+    <p>Кирионенко Михаил Александрович</p>
+    <p>РИ-210941</p>
+    <a href="https://github.com/WinoHare/ElearnKirionenko/tree/project">
+        <img src="{%static  "images/github.png" %}" alt="GitHub" width="50">
+    </a>
+  </footer>
+</body>
