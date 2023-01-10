@@ -18,7 +18,7 @@ class Currencies:
         Returns:
             DataFrame: Таблица с курсами вакансий
         """
-        connection = sqlite3.connect('processing/ProcessingModule/Data/currencies_database.db')
+        connection = sqlite3.connect('Data/currencies_database.db')
         return connection
 
 

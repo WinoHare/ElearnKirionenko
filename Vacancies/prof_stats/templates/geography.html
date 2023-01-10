@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static "images/logo.ico" %}">
   <title>География</title>
 </head>
 <body>
@@ -35,33 +36,18 @@
         <hr>
       </div>
     <h1>География</h1>
-    <div class="years-statistics">
 
-      {% for graph in graphs %}
+    <div class="stats-form hidden">
+        <button type="button" class="close">Закрыть</button>
+    </div>
+    <div class="years-statistics">
+      {% for city in cities %}
         <div class="years-statistics-item">
-          <h2>{{ graph.name }}</h2>
-          <img src="{{ graph.image.url }}" width="450" class="stats-image">
-          <button class="table-button {{graph.stat}}" type="button">Показать таблицу</button>
-          <div class="stats-form {{graph.stat}} hidden">
-          <table class="stats-table">
-            {% if graph.stat == 'cities_salary' %}
-              {% for line in salary_table %}
-              <tr>
-                <td class="stats-table-item">{{ line.city }}</td>
-                <td class="stats-table-item">{{ line.salary }}</td>
-              </tr>
-              {% endfor %}
-            {% else %}
-              {% for line in percent_table %}
-              <tr>
-                <td class="stats-table-item">{{ line.city }}</td>
-                <td class="stats-table-item">{{ line.percent }}</td>
-              </tr>
-              {% endfor %}
-            {% endif %}
-          </table>
-          <button type="button" class="close {{graph.stat}}">Закрыть</button>
-        </div>
+          <h2>{{ city.title }}</h2>
+          <img src="{{ city.graph.url }}" width="450" class="stats-image">
+            {{ city.table|safe }}
+          <button class="table-button {{city.stat}}" type="button">Показать таблицу</button>
+
         </div>
       {% endfor %}
     </div>

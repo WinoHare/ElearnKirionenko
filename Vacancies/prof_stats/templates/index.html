@@ -16,6 +16,9 @@
       <nav class="navigation">
         <ul class="navigation-list">
           <li class="navigation-item">
+          <img src="{%static  "images/logo.png" %}" width="75px" height="50px">
+          </li>
+          <li class="navigation-item">
             <a href=".."><b>Главная</b></a>
             </li>
           <li class="navigation-item">
@@ -42,61 +45,36 @@
 
     <h2>Откуда все началось?</h2>
     <div class="php-paragraph">
-      <img src="{%static  "images/rasmus.jpg" %}" width="550" class="paragraph-image">
+      <img src="{{ first_paragraph.image.url }}" width="550" class="paragraph-image">
       <p class="paragraph-content">
-        Скриптовый язык программирования с открытым кодом Personal Home Page (PHP) изначально был создан Расмусом Лердоррфом в 1995 году, а спустя три года переиздан после серьезной переработки. Очень быстро он занял лидирующие позиции в сфере веб-проектирования, особенно серверной его части. Несмотря на свой почтенный для IT-сферы «возраст», PHP продолжает оставаться в десятке самых популярных языков программирования
+        {{ first_paragraph.text_content }}
       </p>
     </div>
 
     <h2 class="reversed-title">А чем занимается?</h2>
     <div class="php-paragraph reversed">
-      <img src="{%static  "images/php-logo.jpg" %}" width="550" class="paragraph-image">
+      <img src="{{ second_paragraph.image.url }}" width="550" class="paragraph-image">
       <p class="paragraph-content">
-        Программист PHP выполняет основную работу по созданию web-сайта. Фактически он готовит фундамент, крышу, стены и все несущие конструкции, если провести аналогию со строительством. Конечные продукты труда PHP-программистов – это интернет-магазины, порталы, корпоративные сайты, платформы онлайн-обучения, системы доставки, бронирования, форумы, социальные сети и многое другое.
+        {{ second_paragraph.text_content }}
       </p>
     </div>
 
+    <h2 class="todo-title">Что по задачам?</h2>
     <div class="todo">
-    <h2>Что по задачам?</h2>
-      <ol class="todo-list">
-        <li class="todo-item">Разработка страниц или модулей сайта на языке PHP</li>
-        <li class="todo-item">Тестирование созданного продукта</li>
-        <li class="todo-item">Выявление и исправление ошибок</li>
-        <li class="todo-item">Запуск продукта</li>
-        <li class="todo-item">Администрирование</li>
-        <li class="todo-item">Обеспечение безопасности разработанного продукта</li>
-        <li class="todo-item">Оптимизация производительности</li>
-        <li class="todo-item">Цсовершенствование функциональности продукта</li>
-        <li class="todo-item">Исправление багов</li>
-        <li class="todo-item">Работа с техническими специалистами (ТЗ, контроль, консультации)</li>
-        <li class="todo-item">Интеграция созданного продукта со всеми видами бизнес-систем, которые необходимы заказчику</li>
-        <li class="todo-item">Работа с документацией, сопровождение продукта</li>
-      </ol>
+        {% for todo in ToDos %}
+            <p class="todo-text">{{ todo.name }}</p>
+        {% endfor %}
     </div>
 
     <div class="toknow">
       <h2>Что нужно знать для Джуна?</h2>
       <ul class="toknow-list">
-        <li class="toknow-item">
-          <img src="{%static  "images/cms.png" %}" width="64">
-          <p>CMS</p>
-        </li>
-        <li class="toknow-item">
-          <img src="{%static  "images/php.png" %}" width="64">
-          <p>PHP</p>
-        </li>
-        <li class="toknow-item">
-          <img src="{%static  "images/mysql.png" %}" width="64">
-          <p>СУБД MySql</p>
-        </li>
-        <li class="toknow-item">
-          <img src="{%static  "images/oop.png" %}" width="64">
-          <p>Основы ООП</p>
-        </li>
-        <li class="toknow-item">
-          <img src="{%static  "images/git.png" %}" width="64">
-          <p>Git</p>
-        </li>
+          {% for skill in skills %}
+            <li class="toknow-item">
+              <img src="{{ skill.image.url }}" width="64">
+              <p>{{ skill.name }}</p>
+            </li>
+          {% endfor %}
       </ul>
     </div>
 

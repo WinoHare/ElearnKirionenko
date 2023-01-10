@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static "images/logo.ico" %}">
   <title>Востребованность</title>
 </head>
 <body>
@@ -36,37 +37,17 @@
       </div>
 
     <h1>Востребованность</h1>
-    
+    <div class="stats-form hidden">
+          <button type="button" class="close">Закрыть</button>
+    </div>
     <div class="years-statistics">
 
-      {% for graph in graphs %}
+      {% for demand in demands %}
         <div class="years-statistics-item">
-          <h2>{{ graph.name }}</h2>
-          <img src="{{ graph.image.url }}" width="450" class="stats-image">
-          <button class="table-button {{graph.stat}}" type="button">Показать таблицу</button>
-
-          <div class="stats-form {{graph.stat}} hidden">
-          <table class="stats-table">
-            {% for line in table %}
-            <tr>
-              <td class="stats-table-item">{{ line.year }}</td>
-              <td class="stats-table-item">
-                {% if graph.stat == 'years_salary' %}
-                  {{ line.salary }}
-                {% elif graph.stat == 'years_prof_salary' %}
-                  {{ line.prof_salary }}
-                {% elif graph.stat == 'years_count' %}
-                  {{ line.count }}
-                {% else %}
-                  {{ line.prof_count }}
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </table>
-          <button type="button" class="close {{graph.stat}}">Закрыть</button>
-        </div>
-
+          <h2>{{ demand.title }}</h2>
+          <img src="{{ demand.graph.url }}" width="450" class="stats-image">
+            {{ demand.table|safe }}
+          <button class="table-button {{ demand.stat }}" type="button">Показать таблицу</button>
         </div>
       {% endfor %}
     </div>

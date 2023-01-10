@@ -1,19 +1,24 @@
+html {
+  height: 100%;
+}
+
 body {
+    position: relative;
     background: #E5E5E5;
     font-family: 'Noto Serif', serif;
     padding: 0;
     margin: 0;
+    min-height: 100%;
 }
 
 .header {
-    max-width: 1010px;
+    width: 75%;
     margin: 0;
     padding-bottom: 0;
-    background-color: #E5E5E5;  
-    position: fixed;  
-    top: 0;  
-    z-index: 100;  
-    width: 100%;
+    background-color: #E5E5E5;
+    position: fixed;
+    top: 0;
+    z-index: 100;
 }
 
 hr {
@@ -21,17 +26,22 @@ hr {
 }
 
 main {
-    max-width: 1010px;
-    margin-left: 240px;
+    max-width: 75%;
+    margin: 0 auto;
+    padding-bottom: 120px;
 }
 
 footer {
+    position: absolute;
+    width: 98.65%;
+    bottom: 0;
     background: #9f9f9f;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0;
     padding: 10px;
+    height: 120px;
 }
 
 h2 {
@@ -41,13 +51,18 @@ h2 {
 .navigation-list {
     padding: 0;
     margin: 0;
-    margin-top: 33px;
-    margin-bottom: 33px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     font-size: 18px;
     justify-content: space-between;
+}
+
+.navigation-item {
+    display: flex;
+    align-items: center;
 }
 
 .navigation-item:last-child {
@@ -75,14 +90,15 @@ h1 {
 }
 
 .who-is-php {
-    margin-left: 110px;
+    display: block;
+    margin: 0 auto;
     margin-bottom: 100px;
 }
 
 .php-paragraph {
     display: flex;
     margin-bottom: 100px;
-    
+
 }
 
 .php-paragraph.reversed {
@@ -97,6 +113,8 @@ h1 {
 
 .paragraph-image {
     margin-right: 50px;
+    width: 300px;
+    height: 300px;
 }
 
 .paragraph-content {
@@ -114,19 +132,21 @@ h2 {
 
 .todo {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.todo-list {
-    list-style: none;
+.todo-title {
     text-align: center;
-    margin-bottom: 100px;
 }
 
-.todo-item {
-    font-size: 18px;
-    margin-bottom: 5px;
+.todo-text {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30%;
+    border: 1px solid #bfbfbf;
+    text-align: center;
+
 }
 
 .toknow {
@@ -142,6 +162,10 @@ h2 {
 }
 
 .toknow-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     font-size: 18px;
 }
@@ -153,6 +177,8 @@ h2 {
 .years-statistics {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
     justify-content: space-between;
     margin-bottom: 50px;
 }
@@ -161,14 +187,14 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 450px;
+    width: 40%;
     border: #070707;
+    margin: auto;
 }
 
 .skills {
     justify-content: center;
     margin-bottom: 50px;
-    margin-left: 275px;
 }
 
 .years-statistics-item h2 {
@@ -179,7 +205,6 @@ h2 {
 .stats-table {
     text-align: center;
     border-collapse: collapse;
-    margin-left: 25px;
     margin-bottom: 25px;
 }
 
@@ -201,9 +226,10 @@ footer p {
 }
 
 .vacancy {
-    width: 450px;
+    width: 100%;
     border: 1px solid grey;
     margin-bottom: 30px;
+    padding: 15px;
 }
 
 .vacancy-url {
@@ -212,17 +238,12 @@ footer p {
 }
 
 .vacancy-title {
-    font-size: 18px;
+    font-size: 24px;
     text-align: center;
 }
 
 .vacancy-description, .vacancy-skills, .vacancy-company, .vacancy-salary, .vacancy-area-name, .vacancy-published-at {
-    font-size: 14px;
-    text-align: center;
-}
-
-.hidden {
-    display: none;
+    font-size: 18px;
 }
 
 .table-button {
@@ -245,20 +266,21 @@ footer p {
 
 .stats-form {
     position: fixed;
-    width: 500px;
-    top: 20%;
-    left: 32%;
-    align-items: center;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    right: 37%;
+    width: 25%;
+    left: 36%;
     padding: 20px;
     background-color: white;
     border: 2px solid #9f9f9f;
+    z-index: 10;
 }
 
 .close {
-    width: 450px;
+    width: 100%;
     height: 30px;
-    margin-left: 25px;
     background-color: #b9b6b6;
     border: 1px solid #9f9f9f;
 }
@@ -269,4 +291,36 @@ footer p {
 
 .close:active {
     background-color: #dbdada;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.vacancies-button {
+    padding: 15px;
+    text-align: center;
+    width: 30%;
+    background-color: #b9b6b6;
+    border: 1px solid #9f9f9f;
+}
+
+.input-form {
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.vacancies-button:hover {
+    background-color: #c7c7c7;
+}
+
+.vacancies-button:active {
+    background-color: #dbdada;
+}
+
+.hidden {
+    display: none;
 }

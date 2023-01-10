@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static "images/logo.ico" %}">
   <title>Последние вакансии</title>
 </head>
 <body>
@@ -35,39 +36,28 @@
         <hr>
       </div>
     <h1>Последние вакансии</h1>
-
-    <div class="vacancies-list">
-      {% for vacancy in vacancies %}
-      <div class="vacancy">
-        <a href="{{vacancy.url}}" class="vacancy-url">
-          <h3 class="vacancy-title">{{ vacancy.name }}</h3>
-        </a>
-        {% if vacancy.description != "['description']" %}
-        <p class="vacancy-description">{{vacancy.description}}</p>
-        {% endif %}
-
-        {% if vacancy.skills != "" %}
-        <p class="vacancy-skills">Необходимые скилы: {{vacancy.skills}}</p>
-        {% endif %}
-
-        {% if vacancy.company != "" %}
-        <p class="vacancy-company">Компания: {{vacancy.company}}</p>
-        {% endif %}
-
-        {% if vacancy.salary != 0 %}
-        <p class="vacancy-salary">Оклад: {{vacancy.salary}} рублей</p>
-        {% endif %}
-
-        {% if vacancy.area_name != 0 %}
-        <p class="vacancy-area-name">Где работать: {{vacancy.area_name}}</p>
-        {% endif %}
-
-        {% if vacancy.published_at != 0 %}
-        <p class="vacancy-published-at">Дата публикация: {{vacancy.published_at.date}}</p>
-        {% endif %}
-      </div>
-      {% endfor %}
+    <div class="input-container">
+        <p class="input-text">Введите любое число декабря</p>
+        <input type="number" class="input-form" min="1" max="31">
+        <button type="button" class="vacancies-button">Показать вакансии</button>
     </div>
+
+    <div class="vacancies-list"></div>
+    <template class="vacancy-template" id="vacancy">
+          <div class="vacancy">
+            <a href="" class="vacancy-url">
+              <h3 class="vacancy-title"></h3>
+            </a>
+              <p class="vacancy-description"><b>Описание:</b> <span class="description"></span></p>
+              <p class="vacancy-skills"><b>Необходимые скилы:</b> <span class="skills"></span></p>
+              <p class="vacancy-company"><b>Компания:</b> <span class="company"></span></p>
+              <p class="vacancy-salary"><b>Оклад:</b> <span class="salary"></span></p>
+              <p class="vacancy-area-name"><b>Где работать:</b> <span class="area-name"></span></p>
+              <p class="vacancy-published-at"><b>Дата публикация:</b> <span class="published-at"></span></p>
+          </div>
+      </template>
+  <script src="{%static  "js/vacancies.js" %}"></script>
+
   </main>
 
   <footer>
@@ -77,4 +67,6 @@
         <img src="{%static  "images/github.png" %}" alt="GitHub" width="50">
     </a>
   </footer>
+
+
 </body>
